@@ -1,0 +1,8 @@
+name: ReForgeDRE
+main: io.github.dre2n.reforgedre.ReForgeDRE
+version: ${project.version}
+author: Daniel Saukel
+commands:
+  reforge:
+    description: Gives a ReForgeDRE item
+    aliases: [rfgive]
