@@ -58,7 +58,7 @@ public class ParticleListener implements Listener {
             r = 0.01f;
             b = 0.1f;
             g = 0.25f;
-        } else {
+        } else if (!accessory.equals(Weapon.RUBIES)) {
             return;
         }
         World world = event.getEntity().getWorld();

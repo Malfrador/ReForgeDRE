@@ -44,6 +44,7 @@ public class Weapon {
     public static final String QUARTZ = ChatColor.GRAY + "Mit Quarz besetzt.";
     public static final String NETHER_STAR = ChatColor.GRAY + "Mit Netherstern besetzt.";
     public static final String PEARLS = ChatColor.GRAY + "Mit Perlen besetzt.";
+    public static final String RUBIES = ChatColor.GRAY + "Mit Rubinen besetzt.";
 
     static final Set<Weapon> cache = new HashSet<>();
 
