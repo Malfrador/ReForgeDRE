@@ -45,8 +45,8 @@ public class DREItem {
     public static ItemStack HOLY_SWORD = setup(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Szent Kard", "Anderthalbhänder", 4, "Aus Sohothin");
 
     static {
-        PIRATE_SABER = ItemUtil.setAttribute(PIRATE_SABER, Attribute.GENERIC_ATTACK_DAMAGE, mod(4.85), MAIN_HAND);
-        PIRATE_SABER = ItemUtil.setAttribute(PIRATE_SABER, Attribute.GENERIC_ATTACK_SPEED, mod(2.1), MAIN_HAND);
+        PIRATE_SABER = ItemUtil.setAttribute(PIRATE_SABER, Attribute.GENERIC_ATTACK_DAMAGE, mod(-1.15), MAIN_HAND);
+        PIRATE_SABER = ItemUtil.setAttribute(PIRATE_SABER, Attribute.GENERIC_ATTACK_SPEED, mod(-1.9), MAIN_HAND);
         ItemMeta dMeta = DWARF_PICKAXE.getItemMeta();
         dMeta.setUnbreakable(true);
         DWARF_PICKAXE.setItemMeta(dMeta);
