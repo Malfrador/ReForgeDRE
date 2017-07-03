@@ -36,7 +36,7 @@ public class ParticleListener implements Listener {
             return;
         }
         ItemStack item = ((Player) event.getDamager()).getInventory().getItemInMainHand();
-        if (item == null || !item.getItemMeta().hasLore() || item.getItemMeta().getLore().size() < 2) {
+        if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasLore() || item.getItemMeta().getLore().size() < 2) {
             return;
         }
         String accessory = item.getItemMeta().getLore().get(1);
