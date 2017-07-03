@@ -17,6 +17,7 @@
 package io.github.dre2n.reforgedre;
 
 import io.github.dre2n.itemsxl.util.commons.misc.NumberUtil;
+import io.github.dre2n.sakura.SakuraItem;
 import java.util.List;
 import java.util.Map.Entry;
 import org.bukkit.Material;
@@ -91,7 +92,7 @@ public class ReForgeDRE extends JavaPlugin {
                             weapon = w;
                         }
                     }
-                    inventory.addItem(weapon.toItemStack(false, 4, "Aus Dao-Shen"));
+                    inventory.addItem(weapon.toItemStack(false, 4, "Aus Dao-Shen"), SakuraItem.SAPLING);
                     break;
                 case "pirate":
                     ItemStack parrot = new ItemStack(Material.MONSTER_EGG, 1);
