@@ -111,20 +111,25 @@ public class AnvilListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getPlayer().getOpenInventory() != null) {
-            return;
-        }
-        for (AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
-            if (anvil.gui.equals(event.getInventory())) {
-                for (ItemStack stack : anvil.gui.getContents()) {
-                    if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
-                        event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), stack);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (event.getPlayer().getOpenInventory().getTitle().equals("Schmieden...")) {
+                    return;
+                }
+                for (AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
+                    if (anvil.gui.equals(event.getInventory())) {
+                        for (ItemStack stack : event.getInventory().getContents()) {
+                            if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                                event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), stack);
+                            }
+                        }
+                        AdvancedWorkbench.cache.remove(anvil);
+                        break;
                     }
                 }
-                AdvancedWorkbench.cache.remove(anvil);
-                break;
             }
-        }
+        }.runTaskLater(ReForgeDRE.getInstance(), 1L);
     }
 
 }
