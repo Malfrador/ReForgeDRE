@@ -27,7 +27,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -73,7 +72,6 @@
             <groupId>de.erethon</groupId>
             <artifactId>commons</artifactId>
             <version>4.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
