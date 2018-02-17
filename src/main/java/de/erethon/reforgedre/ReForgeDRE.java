@@ -48,6 +48,7 @@ public class ReForgeDRE extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RecipeListener(), this);
         getServer().getPluginManager().registerEvents(new ParticleListener(), this);
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new InvisibilityListener(), this);
     }
 
     public static ReForgeDRE getInstance() {
