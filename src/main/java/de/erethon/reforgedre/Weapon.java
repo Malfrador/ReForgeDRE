@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Daniel Saukel
+ * Copyright (C) 2017-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,30 +14,121 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.reforgedre;
+package de.erethon.reforgedre;
 
-import io.github.dre2n.itemsxl.util.commons.item.ArmorSlot;
-import io.github.dre2n.itemsxl.util.commons.item.ItemUtil;
+import de.erethon.commons.item.AttributeWrapper;
+import de.erethon.commons.item.InternalAttribute;
+import de.erethon.commons.item.InternalOperation;
+import de.erethon.commons.item.InternalSlot;
+import de.erethon.reforgedre.AdvancedRecipe.MaterialType;
+import static de.erethon.reforgedre.AdvancedRecipe.MaterialType.*;
+import static de.erethon.reforgedre.Weapon.Type.*;
+import io.github.dre2n.factionsxl.FactionsXL;
+import io.github.dre2n.factionsxl.board.Region;
+import io.github.dre2n.factionsxl.config.FMessage;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author Daniel Saukel
  */
-public class Weapon {
+public enum Weapon {
+
+    DAGGER("Dolch", SWORD, 2.5, 0.0, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(20, BLADE);
+            put(29, BLADE);
+            put(37, CROSSGUARD);
+            put(38, HANDLE);
+            put(39, CROSSGUARD);
+            put(47, HANDLE);
+        }
+    })),
+    KATANA("Katana", SWORD, 4.5, -2.15, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(2, BLADE);
+            put(11, BLADE);
+            put(20, BLADE);
+            put(29, BLADE);
+            put(38, HANDLE);
+            put(47, HANDLE);
+        }
+    })),
+    LONGSWORD("Langschwert", SWORD, 7.0, -2.8, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(2, BLADE);
+            put(11, BLADE);
+            put(20, BLADE);
+            put(27, CROSSGUARD);
+            put(28, CROSSGUARD);
+            put(29, BLADE);
+            put(30, CROSSGUARD);
+            put(31, CROSSGUARD);
+            put(38, HANDLE);
+            put(47, HANDLE);
+        }
+    })),
+    PIRATE_SABER("Piratensäbel", SWORD, 3.85, -1.9),
+    RAPIER("Rapier", SWORD, 3.85, -1.7, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(2, BLADE);
+            put(11, BLADE);
+            put(20, BLADE);
+            put(27, CROSSGUARD);
+            put(28, CROSSGUARD);
+            put(29, BLADE);
+            put(37, CROSSGUARD);
+            put(38, HANDLE);
+            put(47, HANDLE);
+        }
+    })),
+    KNIGHTLY_SWORD("Ritterschwert", SWORD, 5.0, -2.4, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(11, BLADE);
+            put(12, BLADE);
+            put(20, BLADE);
+            put(21, BLADE);
+            put(27, CROSSGUARD);
+            put(28, CROSSGUARD);
+            put(29, BLADE);
+            put(30, BLADE);
+            put(31, CROSSGUARD);
+            put(32, CROSSGUARD);
+            put(38, HANDLE);
+            put(39, HANDLE);
+            put(47, HANDLE);
+            put(48, HANDLE);
+        }
+    }));
+
+    public String name;
+    public Type base;
+    public double damage;
+    public double speed;
+    public AdvancedRecipe recipe;
+
+    Weapon(String name, Type base, double damage, double speed) {
+        this.name = name;
+        this.base = base;
+        this.damage = damage;
+        this.speed = speed;
+    }
+
+    Weapon(String name, Type base, double damage, double speed, AdvancedRecipe recipe) {
+        this.name = name;
+        this.base = base;
+        this.damage = damage;
+        this.speed = speed;
+        this.recipe = recipe;
+    }
 
     public static final String DIAMONDS = ChatColor.GRAY + "Mit Diamanten besetzt.";
     public static final String EMERALDS = ChatColor.GRAY + "Mit Smaragden besetzt.";
@@ -45,8 +136,6 @@ public class Weapon {
     public static final String NETHER_STAR = ChatColor.GRAY + "Mit Netherstern besetzt.";
     public static final String PEARLS = ChatColor.GRAY + "Mit Perlen besetzt.";
     public static final String RUBIES = ChatColor.GRAY + "Mit Rubinen besetzt.";
-
-    static final Set<Weapon> cache = new HashSet<>();
 
     public enum Type {
         AXE(Material.IRON_AXE, Material.GOLD_AXE),
@@ -63,24 +152,16 @@ public class Weapon {
 
     public static final String STAR = "\u2605";
 
-    public String name;
-    public Type base;
-    public double damage;
-    public double speed;
-
-    public Weapon(String name, Map<String, Object> data) {
-        cache.add(this);
-        this.name = name;
-        base = Type.valueOf((String) data.get("base"));
-        damage = (double) data.get("damage");
-        speed = (double) data.get("speed");
+    public static String getOrigin(Player player) {
+        Region region = FactionsXL.getInstance().getBoard().getByLocation(player.getLocation());
+        return region != null ? region.getName() : FMessage.MISC_WILDERNESS.getMessage();
     }
 
-    public ItemStack toItemStack(boolean gold, int quality, String smith) {
-        return toItemStack(gold, quality, smith, null);
+    public ItemStack toItemStack(boolean gold, int quality, String smith, String origin) {
+        return toItemStack(gold, quality, smith, origin, null);
     }
 
-    public ItemStack toItemStack(boolean gold, int quality, String smith, ItemStack accessory) {
+    public ItemStack toItemStack(boolean gold, int quality, String smith, String origin, ItemStack accessory) {
         ItemStack stack = new ItemStack(gold ? base.gold : base.iron);
         double damage = this.damage;
         double speed = this.speed;
@@ -105,8 +186,7 @@ public class Weapon {
             if (new Random().nextInt(100) > 90) {
                 stack.addEnchantment(Enchantment.VANISHING_CURSE, 1);
             } else if (new Random().nextInt() > 60) {
-                stack = ItemUtil.setAttribute(stack, Attribute.GENERIC_MOVEMENT_SPEED,
-                        new AttributeModifier("DRE2N", -0.1, Operation.MULTIPLY_SCALAR_1), new HashSet<>(Arrays.asList(ArmorSlot.MAIN_HAND)));
+                stack = new AttributeWrapper(InternalAttribute.GENERIC_MOVEMENT_SPEED, -0.1, InternalOperation.MULTIPLY_SCALAR_1, InternalSlot.MAIN_HAND).applyTo(stack);
             }
         } else if (quality == 1) {
             damage -= damage / 10;
@@ -114,14 +194,11 @@ public class Weapon {
             if (new Random().nextInt(100) > 75) {
                 stack.addEnchantment(Enchantment.VANISHING_CURSE, 1);
             } else if (new Random().nextInt() > 60) {
-                stack = ItemUtil.setAttribute(stack, Attribute.GENERIC_MOVEMENT_SPEED,
-                        new AttributeModifier("DRE2N", -0.2, Operation.MULTIPLY_SCALAR_1), new HashSet<>(Arrays.asList(ArmorSlot.MAIN_HAND)));
+                stack = new AttributeWrapper(InternalAttribute.GENERIC_MOVEMENT_SPEED, -0.2, InternalOperation.MULTIPLY_SCALAR_1, InternalSlot.MAIN_HAND).applyTo(stack);
             }
         }
-        stack = ItemUtil.setAttribute(stack, Attribute.GENERIC_ATTACK_DAMAGE,
-                new AttributeModifier("DRE2N", damage, Operation.ADD_NUMBER), new HashSet<>(Arrays.asList(ArmorSlot.MAIN_HAND)));
-        stack = ItemUtil.setAttribute(stack, Attribute.GENERIC_ATTACK_SPEED,
-                new AttributeModifier("DRE2N", speed, Operation.ADD_NUMBER), new HashSet<>(Arrays.asList(ArmorSlot.MAIN_HAND)));
+        stack = new AttributeWrapper(InternalAttribute.GENERIC_ATTACK_DAMAGE, damage, InternalOperation.ADD_NUMBER, InternalSlot.MAIN_HAND).applyTo(stack);
+        stack = new AttributeWrapper(InternalAttribute.GENERIC_ATTACK_SPEED, speed, InternalOperation.ADD_NUMBER, InternalSlot.MAIN_HAND).applyTo(stack);
         ItemMeta meta = stack.getItemMeta();
         String displayName = ChatColor.WHITE + name;
         if (accessory != null && accessory.getItemMeta().hasDisplayName()) {
@@ -159,6 +236,7 @@ public class Weapon {
         }
         lore.add(ChatColor.GREEN + "Qualität: " + ChatColor.GOLD + stars);
         lore.add(ChatColor.GREEN + "Schmied: " + ChatColor.GOLD + smith);
+        lore.add(ChatColor.GREEN + "Herkunft: " + ChatColor.GOLD + origin);
         meta.setLore(lore);
         stack.setItemMeta(meta);
         return stack;

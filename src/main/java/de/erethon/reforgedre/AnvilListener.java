@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Daniel Saukel
+ * Copyright (C) 2017-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.reforgedre;
+package de.erethon.reforgedre;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -55,7 +55,9 @@ public class AnvilListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         for (final AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
             if (event.getInventory() != null && anvil.gui.equals(event.getInventory())) {
-                if (AdvancedWorkbench.PLACEHOLDER.equals(event.getCurrentItem())) {
+                if (AdvancedWorkbench.SWITCH.equals(event.getCurrentItem())) {
+                    event.setCancelled(true);
+                } else if (AdvancedWorkbench.PLACEHOLDER.equals(event.getCurrentItem())) {
                     event.setCancelled(true);
                 } else if (event.getSlot() == AdvancedWorkbench.RESULT_SLOT) {
                     event.setCancelled(true);
@@ -120,7 +122,8 @@ public class AnvilListener implements Listener {
                 for (AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
                     if (anvil.gui.equals(event.getInventory())) {
                         for (ItemStack stack : event.getInventory().getContents()) {
-                            if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                            if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
+                                    && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
                                 event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), stack);
                             }
                         }

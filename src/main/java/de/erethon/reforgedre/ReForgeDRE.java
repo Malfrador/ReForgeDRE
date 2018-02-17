@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Daniel Saukel
+ * Copyright (C) 2017-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.reforgedre;
+package de.erethon.reforgedre;
 
-import io.github.dre2n.itemsxl.util.commons.misc.NumberUtil;
+import de.erethon.commons.misc.EnumUtil;
+import de.erethon.commons.misc.NumberUtil;
 import io.github.dre2n.sakura.SakuraItem;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map.Entry;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +38,8 @@ public class ReForgeDRE extends JavaPlugin {
 
     private static ReForgeDRE instance;
 
-    public List<String> disabledRecipes;
+    public List<Material> disabledRecipes = Arrays.asList(Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.DIAMOND_AXE,
+            Material.IRON_AXE, Material.GOLD_AXE, Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS);
 
     @Override
     public void onEnable() {
@@ -47,13 +48,6 @@ public class ReForgeDRE extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RecipeListener(), this);
         getServer().getPluginManager().registerEvents(new ParticleListener(), this);
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
-        disabledRecipes = getConfig().getStringList("disabledRecipes");
-        for (Entry<String, Object> entry : getConfig().getConfigurationSection("weapons").getValues(false).entrySet()) {
-            new Weapon(entry.getKey(), ((ConfigurationSection) entry.getValue()).getValues(false));
-        }
-        for (Entry<String, Object> entry : getConfig().getConfigurationSection("recipes").getValues(false).entrySet()) {
-            new AdvancedRecipe(entry.getKey(), ((ConfigurationSection) entry.getValue()).getValues(false));
-        }
     }
 
     public static ReForgeDRE getInstance() {
@@ -86,20 +80,14 @@ public class ReForgeDRE extends JavaPlugin {
                     inventory.addItem(new ItemStack(Material.GOLD_INGOT, 64));
                     break;
                 case "daoshen":
-                    Weapon weapon = null;
-                    for (Weapon w : Weapon.cache) {
-                        if (w.name.equalsIgnoreCase("Katana")) {
-                            weapon = w;
-                        }
-                    }
-                    inventory.addItem(weapon.toItemStack(false, 4, "Aus Dao-Shen"), SakuraItem.SAPLING);
+                    inventory.addItem(Weapon.KATANA.toItemStack(false, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
                     break;
                 case "pirate":
                     ItemStack parrot = new ItemStack(Material.MONSTER_EGG, 1);
                     SpawnEggMeta meta = (SpawnEggMeta) parrot.getItemMeta();
                     meta.setSpawnedType(EntityType.PARROT);
                     parrot.setItemMeta(meta);
-                    inventory.addItem(DREItem.PIRATE_SABER, parrot);
+                    inventory.addItem(Weapon.PIRATE_SABER.toItemStack(false, 3, "Arrrr!", "7 Weltmeere"), parrot);
                     break;
             }
             inventory.addItem(new ItemStack(Material.LEATHER_CHESTPLATE), new ItemStack(Material.LEATHER_LEGGINGS),
@@ -109,15 +97,17 @@ public class ReForgeDRE extends JavaPlugin {
         if (!sender.isOp()) {
             return false;
         }
-        Weapon weapon = null;
-        for (Weapon w : Weapon.cache) {
-            if (w.name.equalsIgnoreCase(args[0])) {
-                weapon = w;
+        Weapon weapon = EnumUtil.getEnumIgnoreCase(Weapon.class, args[0]);
+        if (weapon == null) {
+            for (Weapon w : Weapon.values()) {
+                if (w.name.equalsIgnoreCase(args[0])) {
+                    weapon = w;
+                }
             }
         }
         int quality = args.length >= 2 ? NumberUtil.parseInt(args[1]) : -1;
         if (weapon != null) {
-            ((Player) sender).getInventory().addItem(weapon.toItemStack(false, quality, "unbekannt"));
+            ((Player) sender).getInventory().addItem(weapon.toItemStack(false, quality, "unbekannt", Weapon.getOrigin(player)));
         } else {
             return false;
         }

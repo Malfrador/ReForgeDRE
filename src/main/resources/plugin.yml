@@ -1,5 +1,5 @@
 name: ReForgeDRE
-main: io.github.dre2n.reforgedre.ReForgeDRE
+main: de.erethon.reforgedre.ReForgeDRE
 version: ${project.version}
 author: Daniel Saukel
 commands:

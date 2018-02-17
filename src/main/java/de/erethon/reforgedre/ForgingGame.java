@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Daniel Saukel
+ * Copyright (C) 2017-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.reforgedre;
+package de.erethon.reforgedre;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -88,11 +88,11 @@ public class ForgingGame {
 
     public class GameTask extends BukkitRunnable {
 
-        ItemStack item1 = weapon.toItemStack(gold, 1, player.getName(), accessory);
-        ItemStack item2 = weapon.toItemStack(gold, 2, player.getName(), accessory);
-        ItemStack item3 = weapon.toItemStack(gold, 3, player.getName(), accessory);
-        ItemStack item4 = weapon.toItemStack(gold, 4, player.getName(), accessory);
-        ItemStack item5 = weapon.toItemStack(gold, 5, player.getName(), accessory);
+        ItemStack item1 = weapon.toItemStack(gold, 1, player.getName(), Weapon.getOrigin(player), accessory);
+        ItemStack item2 = weapon.toItemStack(gold, 2, player.getName(), Weapon.getOrigin(player), accessory);
+        ItemStack item3 = weapon.toItemStack(gold, 3, player.getName(), Weapon.getOrigin(player), accessory);
+        ItemStack item4 = weapon.toItemStack(gold, 4, player.getName(), Weapon.getOrigin(player), accessory);
+        ItemStack item5 = weapon.toItemStack(gold, 5, player.getName(), Weapon.getOrigin(player), accessory);
 
         int i, i2, i3, i4, i5 = 0;
         int edgeUpperLeft = 0;

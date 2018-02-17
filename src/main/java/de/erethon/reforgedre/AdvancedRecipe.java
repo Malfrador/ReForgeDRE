@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Daniel Saukel
+ * Copyright (C) 2017-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,23 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.reforgedre;
+package de.erethon.reforgedre;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import org.bukkit.Material;
 
 /**
  * @author Daniel Saukel
  */
 public class AdvancedRecipe {
-
-    static final Set<AdvancedRecipe> cache = new HashSet<>();
 
     public enum MaterialType {
         HANDLE(Material.STICK, Material.DIAMOND, Material.EMERALD, Material.QUARTZ, Material.NETHER_STAR, Material.ENDER_PEARL),
@@ -44,19 +39,10 @@ public class AdvancedRecipe {
         }
     }
 
-    public Weapon result;
     public Map<Integer, MaterialType> ingredients = new HashMap<>();
 
-    public AdvancedRecipe(String result, Map<String, Object> ingredients) {
-        cache.add(this);
-        for (Weapon weapon : Weapon.cache) {
-            if (weapon.name.equals(result)) {
-                this.result = weapon;
-            }
-        }
-        for (Entry<String, Object> entry : ingredients.entrySet()) {
-            this.ingredients.put(Integer.parseInt(entry.getKey()), MaterialType.valueOf((String) entry.getValue()));
-        }
+    public AdvancedRecipe(Map<Integer, MaterialType> ingredients) {
+        this.ingredients = ingredients;
     }
 
 }
