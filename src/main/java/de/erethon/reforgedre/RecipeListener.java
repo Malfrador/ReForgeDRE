@@ -33,7 +33,7 @@ public class RecipeListener implements Listener {
     @EventHandler
     public void onCraftItem(CraftItemEvent event) {
         ItemStack result = event.getInventory().getResult();
-        if (ReForgeDRE.getInstance().disabledRecipes.contains(result.getType().toString())) {
+        if (ReForgeDRE.getInstance().disabledRecipes.contains(result.getType())) {
             ItemMeta meta = result.getItemMeta();
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.DARK_RED + "Aufwendigere Schwerter und Rüstungen");
