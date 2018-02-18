@@ -17,9 +17,9 @@
 package de.erethon.reforgedre;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Furnace;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,12 +39,10 @@ public class AnvilListener implements Listener {
     @EventHandler
     public void onAnvilInteract(PlayerInteractEvent event) {
         Block clicked = event.getClickedBlock();
-        if (clicked == null || clicked.getType() != Material.ANVIL || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+        if (clicked == null || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
-        if (!(clicked.getRelative(BlockFace.EAST).getState() instanceof Furnace) && !(clicked.getRelative(BlockFace.WEST).getState() instanceof Furnace)
-                && !(clicked.getRelative(BlockFace.NORTH).getState() instanceof Furnace) && !(clicked.getRelative(BlockFace.SOUTH).getState() instanceof Furnace)
-                && !(clicked.getRelative(BlockFace.DOWN).getState() instanceof Furnace)) {
+        if (!AdvancedWorkbench.isAdvancedWorkbench(clicked)) {
             return;
         }
         event.setCancelled(true);
@@ -53,16 +51,26 @@ public class AnvilListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        HumanEntity player = event.getWhoClicked();
+        ItemStack clicked = event.getCurrentItem();
         for (final AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
             if (event.getInventory() != null && anvil.gui.equals(event.getInventory())) {
-                if (AdvancedWorkbench.SWITCH.equals(event.getCurrentItem())) {
+                if (AdvancedWorkbench.SWITCH.equals(clicked)) {
                     event.setCancelled(true);
-                } else if (AdvancedWorkbench.PLACEHOLDER.equals(event.getCurrentItem())) {
+                    ((Player) player).playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                    anvil.nextType();
+                    for (ItemStack stack : event.getInventory().getContents()) {
+                        if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
+                                && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                            player.getWorld().dropItem(player.getLocation(), stack);
+                        }
+                    }
+                } else if (AdvancedWorkbench.PLACEHOLDER.equals(clicked)) {
                     event.setCancelled(true);
                 } else if (event.getSlot() == AdvancedWorkbench.RESULT_SLOT) {
                     event.setCancelled(true);
                     if (anvil.weapon != null) {
-                        new ForgingGame((Player) event.getWhoClicked(), anvil.weapon, anvil.gold, anvil.accessory).start();
+                        new ForgingGame((Player) player, anvil.weapon, anvil.gold, anvil.accessory).start();
                     }
                 } else {
                     new BukkitRunnable() {
@@ -77,9 +85,9 @@ public class AnvilListener implements Listener {
         }
         for (ForgingGame game : ForgingGame.cache) {
             if (event.getInventory() != null && game.gui.equals(event.getInventory())) {
-                if (ForgingGame.FURNACE.equals(event.getCurrentItem()) || ForgingGame.WATER.equals(event.getCurrentItem())) {
+                if (ForgingGame.FURNACE.equals(clicked) || ForgingGame.WATER.equals(clicked)) {
                     event.setCancelled(true);
-                } else if (event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR) {
+                } else if (clicked != null && clicked.getType() != Material.AIR) {
                     event.setCancelled(true);
                     game.finish(event.getCurrentItem());
                 }

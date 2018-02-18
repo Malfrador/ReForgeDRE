@@ -22,6 +22,9 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -34,8 +37,8 @@ public class AdvancedWorkbench {
 
     public static final ItemStack PLACEHOLDER = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
     public static final ItemStack SWITCH = new ItemStack(Material.WORKBENCH);
+    public static final int SWITCH_SLOT = 8;
     public static final int RESULT_SLOT = 35;
-    public static final int[] CRAFT_SLOTS = {2, 3, 11, 12, 20, 21, 27, 28, 29, 30, 31, 32, 37, 38, 39, 40, 47, 48};
     public static final ItemStack[] SWORD_TEMPLATE = new ItemStack[54];
     public static final ItemStack[] AXE_TEMPLATE = new ItemStack[54];
     public static final ItemStack[] HELMET_TEMPLATE = new ItemStack[54];
@@ -50,59 +53,121 @@ public class AdvancedWorkbench {
         ItemMeta plMeta = PLACEHOLDER.getItemMeta();
         plMeta.setDisplayName(ChatColor.RESET.toString());
         PLACEHOLDER.setItemMeta(plMeta);
-        SWORD_TEMPLATE[0] = PLACEHOLDER;
-        SWORD_TEMPLATE[1] = PLACEHOLDER;
-        SWORD_TEMPLATE[4] = PLACEHOLDER;
-        SWORD_TEMPLATE[5] = PLACEHOLDER;
-        SWORD_TEMPLATE[6] = PLACEHOLDER;
-        SWORD_TEMPLATE[7] = PLACEHOLDER;
+
+        int i = -1;
+        i = -1;
+        slots:
+        while (i != 53) {
+            i++;
+            for (int slot : Type.SWORD.craftSlots) {
+                if (slot == i) {
+                    continue slots;
+                }
+            }
+            if (SWITCH_SLOT != i && RESULT_SLOT != i) {
+                SWORD_TEMPLATE[i] = PLACEHOLDER;
+            }
+        }
         SWORD_TEMPLATE[8] = SWITCH;
-        SWORD_TEMPLATE[9] = PLACEHOLDER;
-        SWORD_TEMPLATE[10] = PLACEHOLDER;
-        SWORD_TEMPLATE[13] = PLACEHOLDER;
-        SWORD_TEMPLATE[14] = PLACEHOLDER;
-        SWORD_TEMPLATE[15] = PLACEHOLDER;
-        SWORD_TEMPLATE[16] = PLACEHOLDER;
-        SWORD_TEMPLATE[17] = PLACEHOLDER;
-        SWORD_TEMPLATE[18] = PLACEHOLDER;
-        SWORD_TEMPLATE[19] = PLACEHOLDER;
-        SWORD_TEMPLATE[22] = PLACEHOLDER;
-        SWORD_TEMPLATE[23] = PLACEHOLDER;
-        SWORD_TEMPLATE[24] = PLACEHOLDER;
-        SWORD_TEMPLATE[25] = PLACEHOLDER;
-        SWORD_TEMPLATE[26] = PLACEHOLDER;
-        SWORD_TEMPLATE[33] = PLACEHOLDER;
-        SWORD_TEMPLATE[34] = PLACEHOLDER;
-        SWORD_TEMPLATE[36] = PLACEHOLDER;
-        SWORD_TEMPLATE[41] = PLACEHOLDER;
-        SWORD_TEMPLATE[42] = PLACEHOLDER;
-        SWORD_TEMPLATE[43] = PLACEHOLDER;
-        SWORD_TEMPLATE[44] = PLACEHOLDER;
-        SWORD_TEMPLATE[45] = PLACEHOLDER;
-        SWORD_TEMPLATE[46] = PLACEHOLDER;
-        SWORD_TEMPLATE[49] = PLACEHOLDER;
-        SWORD_TEMPLATE[50] = PLACEHOLDER;
-        SWORD_TEMPLATE[51] = PLACEHOLDER;
-        SWORD_TEMPLATE[52] = PLACEHOLDER;
-        SWORD_TEMPLATE[53] = PLACEHOLDER;
+
+        i = -1;
+        slots:
+        while (i != 53) {
+            i++;
+            for (int slot : Type.AXE.craftSlots) {
+                if (slot == i) {
+                    continue slots;
+                }
+            }
+            if (SWITCH_SLOT != i && RESULT_SLOT != i) {
+                AXE_TEMPLATE[i] = PLACEHOLDER;
+            }
+        }
+        AXE_TEMPLATE[8] = SWITCH;
+
+        i = -1;
+        slots:
+        while (i != 53) {
+            i++;
+            for (int slot : Type.HELMET.craftSlots) {
+                if (slot == i) {
+                    continue slots;
+                }
+            }
+            if (SWITCH_SLOT != i && RESULT_SLOT != i) {
+                HELMET_TEMPLATE[i] = PLACEHOLDER;
+            }
+        }
+        HELMET_TEMPLATE[8] = SWITCH;
+
+        i = -1;
+        slots:
+        while (i != 53) {
+            i++;
+            for (int slot : Type.CHESTPLATE.craftSlots) {
+                if (slot == i) {
+                    continue slots;
+                }
+            }
+            if (SWITCH_SLOT != i && RESULT_SLOT != i) {
+                CHESTPLATE_TEMPLATE[i] = PLACEHOLDER;
+            }
+        }
+        CHESTPLATE_TEMPLATE[8] = SWITCH;
+
+        i = -1;
+        slots:
+        while (i != 53) {
+            i++;
+            for (int slot : Type.LEGGINGS.craftSlots) {
+                if (slot == i) {
+                    continue slots;
+                }
+            }
+            if (SWITCH_SLOT != i && RESULT_SLOT != i) {
+                LEGGINGS_TEMPLATE[i] = PLACEHOLDER;
+            }
+        }
+        LEGGINGS_TEMPLATE[8] = SWITCH;
+
+        i = -1;
+        slots:
+        while (i != 53) {
+            i++;
+            for (int slot : Type.BOOTS.craftSlots) {
+                if (slot == i) {
+                    continue slots;
+                }
+            }
+            if (SWITCH_SLOT != i && RESULT_SLOT != i) {
+                BOOTS_TEMPLATE[i] = PLACEHOLDER;
+            }
+        }
+        BOOTS_TEMPLATE[8] = SWITCH;
     }
 
     public enum Type {
-        SWORD(SWORD_TEMPLATE),
-        AXE(AXE_TEMPLATE),
-        HELMET(HELMET_TEMPLATE),
-        CHESTPLATE(CHESTPLATE_TEMPLATE),
-        LEGGINGS(LEGGINGS_TEMPLATE),
-        BOOTS(BOOTS_TEMPLATE);
+
+        SWORD(SWORD_TEMPLATE, 2, 3, 11, 12, 20, 21, 27, 28, 29, 30, 31, 32, 37, 38, 39, 40, 47, 48),
+        AXE(AXE_TEMPLATE, 1, 3, 5, 10, 11, 12, 13, 14, 19, 21, 23, 30, 39, 48),
+        HELMET(HELMET_TEMPLATE, 0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22),
+        CHESTPLATE(CHESTPLATE_TEMPLATE, 0, 1, 5, 6, 9, 10, 11, 13, 14, 15, 19, 20, 21, 22, 23, 28, 29, 30, 31, 32, 37, 38, 39, 40, 41, 47, 48, 49),
+        LEGGINGS(LEGGINGS_TEMPLATE, 0, 1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 14, 18, 19, 22, 23, 27, 28, 31, 32, 36, 37, 40, 41, 45, 46, 49, 50),
+        BOOTS(BOOTS_TEMPLATE, 0, 1, 9, 10, 11, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31);
+
         ItemStack[] template;
+        int[] craftSlots;
 
-        Type(ItemStack[] template) {
-
+        Type(ItemStack[] template, int... craftSlots) {
+            this.template = template;
+            this.craftSlots = craftSlots;
         }
+
     }
 
     static final Set<AdvancedWorkbench> cache = new HashSet<>();
 
+    public Type type;
     public Inventory gui;
     public Player player;
     public Weapon weapon;
@@ -113,14 +178,36 @@ public class AdvancedWorkbench {
         cache.add(this);
         this.player = player;
         gui = Bukkit.createInventory(null, 54, "Amboss");
-        gui.setContents(SWORD_TEMPLATE);
+        applyType(Type.SWORD);
+    }
+
+    public void applyType(Type type) {
+        this.type = type;
+        gui.clear();
+        gui.setContents(type.template);
+    }
+
+    public void nextType() {
+        for (Type next : Type.values()) {
+            if (type == next) {
+                type = null;
+            } else if (type == null) {
+                applyType(next);
+            }
+        }
+        if (type == null) {
+            applyType(Type.SWORD);
+        }
     }
 
     public void checkRecipes() {
         Boolean gold = null;
         Weapon checked = null;
         for (Weapon weapon : Weapon.values()) {
-            for (int slot : CRAFT_SLOTS) {
+            if (weapon.recipe == null) {
+                continue;
+            }
+            for (int slot : type.craftSlots) {
                 MaterialType type = weapon.recipe.ingredients.get(slot);
                 ItemStack ingredient = gui.getItem(slot);
                 if (ingredient == null && type == null) {
@@ -162,6 +249,20 @@ public class AdvancedWorkbench {
             gui.setItem(RESULT_SLOT, weapon.toItemStack(gold, -1, player.getName(), Weapon.getOrigin(player), accessory));
         } else {
             gui.setItem(RESULT_SLOT, null);
+        }
+    }
+
+    public static boolean isAdvancedWorkbench(Block block) {
+        if (block.getType() == Material.ANVIL) {
+            return block.getRelative(BlockFace.EAST).getState() instanceof Furnace || block.getRelative(BlockFace.WEST).getState() instanceof Furnace
+                    || block.getRelative(BlockFace.NORTH).getState() instanceof Furnace || block.getRelative(BlockFace.SOUTH).getState() instanceof Furnace
+                    || block.getRelative(BlockFace.DOWN).getState() instanceof Furnace;
+        } else if (block.getState() instanceof Furnace) {
+            return block.getRelative(BlockFace.EAST).getType() == Material.ANVIL || block.getRelative(BlockFace.WEST).getType() == Material.ANVIL
+                    || block.getRelative(BlockFace.NORTH).getType() == Material.ANVIL || block.getRelative(BlockFace.SOUTH).getType() == Material.ANVIL
+                    || block.getRelative(BlockFace.DOWN).getType() == Material.ANVIL;
+        } else {
+            return false;
         }
     }
 
