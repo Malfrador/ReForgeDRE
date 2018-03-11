@@ -18,10 +18,11 @@ package de.erethon.reforgedre;
 
 import de.erethon.commons.misc.EnumUtil;
 import de.erethon.commons.misc.NumberUtil;
-import io.github.dre2n.sakura.SakuraItem;
+import de.erethon.sakura.SakuraItem;
 import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Material;
+import static org.bukkit.Material.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -38,8 +39,9 @@ public class ReForgeDRE extends JavaPlugin {
 
     private static ReForgeDRE instance;
 
-    public List<Material> disabledRecipes = Arrays.asList(Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.DIAMOND_AXE,
-            Material.IRON_AXE, Material.GOLD_AXE, Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS);
+    public List<Material> disabledRecipes = Arrays.asList(DIAMOND_SWORD, IRON_SWORD, GOLD_SWORD, DIAMOND_AXE, IRON_AXE, GOLD_AXE, STONE_AXE, WOOD_AXE,
+            DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, IRON_HELMET, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS,
+            GOLD_HELMET, GOLD_CHESTPLATE, GOLD_LEGGINGS, GOLD_BOOTS);
 
     @Override
     public void onEnable() {

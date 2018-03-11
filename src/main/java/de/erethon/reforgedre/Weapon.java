@@ -20,12 +20,12 @@ import de.erethon.commons.item.AttributeWrapper;
 import de.erethon.commons.item.InternalAttribute;
 import de.erethon.commons.item.InternalOperation;
 import de.erethon.commons.item.InternalSlot;
+import de.erethon.factionsxl.FactionsXL;
+import de.erethon.factionsxl.board.Region;
+import de.erethon.factionsxl.config.FMessage;
 import de.erethon.reforgedre.AdvancedRecipe.MaterialType;
 import static de.erethon.reforgedre.AdvancedRecipe.MaterialType.*;
 import static de.erethon.reforgedre.Weapon.Type.*;
-import io.github.dre2n.factionsxl.FactionsXL;
-import io.github.dre2n.factionsxl.board.Region;
-import io.github.dre2n.factionsxl.config.FMessage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +52,7 @@ public enum Weapon {
             put(47, HANDLE);
         }
     })),
-    KATANA("Katana", SWORD, 4.5, -2.15, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+    KATANA("Katana", SWORD, 4.8, -2.15, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
         {
             put(2, BLADE);
             put(11, BLADE);
@@ -76,8 +76,8 @@ public enum Weapon {
             put(47, HANDLE);
         }
     })),
-    PIRATE_SABER("Piratensäbel", SWORD, 3.85, -1.9),
-    RAPIER("Rapier", SWORD, 3.85, -1.7, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+    PIRATE_SABER("Piratensäbel", SWORD, 4.3, -1.9),
+    RAPIER("Rapier", SWORD, 4.1, -1.7, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
         {
             put(2, BLADE);
             put(11, BLADE);
@@ -90,7 +90,7 @@ public enum Weapon {
             put(47, HANDLE);
         }
     })),
-    KNIGHTLY_SWORD("Ritterschwert", SWORD, 5.0, -2.4, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+    KNIGHTLY_SWORD("Ritterschwert", SWORD, 5.5, -2.4, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
         {
             put(11, BLADE);
             put(12, BLADE);
@@ -105,6 +105,38 @@ public enum Weapon {
             put(38, HANDLE);
             put(39, HANDLE);
             put(47, HANDLE);
+            put(48, HANDLE);
+        }
+    })),
+    LUMBERJACK_AXE("Holzfälleraxt", AXE, 4.5, -3.25, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(1, BLADE);
+            put(3, HANDLE);
+            put(10, BLADE);
+            put(11, BLADE);
+            put(12, HANDLE);
+            put(19, BLADE);
+            put(21, HANDLE);
+            put(30, HANDLE);
+            put(39, HANDLE);
+            put(48, HANDLE);
+        }
+    })),
+    BATTLEAXE("Streitaxt", AXE, 8.0, -3.25, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+        {
+            put(1, BLADE);
+            put(3, HANDLE);
+            put(5, BLADE);
+            put(10, BLADE);
+            put(11, BLADE);
+            put(12, HANDLE);
+            put(13, BLADE);
+            put(14, BLADE);
+            put(19, BLADE);
+            put(23, BLADE);
+            put(21, HANDLE);
+            put(30, HANDLE);
+            put(39, HANDLE);
             put(48, HANDLE);
         }
     }));
