@@ -31,7 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class DREItem {
 
     public static ItemStack DWARF_PICKAXE = setup(new ItemStack(Material.IRON_PICKAXE), ChatColor.WHITE + "Zwergenspitzhacke", "Spitzhacke", 5, "Aus Arachnida");
-    public static ItemStack HOLY_SWORD = setup(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Szent Kard", "Anderthalbhänder", 4, "Aus Sohothin");
+    public static ItemStack HOLY_SWORD = setup(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Szent Kard", "Anderthalbh\u00e4nder", 4, "Aus Sohothin");
 
     static {
         ItemMeta dMeta = DWARF_PICKAXE.getItemMeta();
@@ -59,7 +59,7 @@ public class DREItem {
             stars += STAR;
             quality--;
         }
-        lore.add(ChatColor.GREEN + "Qualität: " + ChatColor.GOLD + stars);
+        lore.add(ChatColor.GREEN + "Qualit\u00e4t: " + ChatColor.GOLD + stars);
         lore.add(ChatColor.GREEN + "Schmied: " + ChatColor.GOLD + smith);
         meta.setLore(lore);
         itemStack.setItemMeta(meta);

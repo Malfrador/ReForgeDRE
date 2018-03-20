@@ -42,7 +42,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public enum Weapon {
 
-    DAGGER("Dolch", SWORD, 2.5, 0.0, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+    DAGGER("Dolch", SWORD, 3.0, 0.0, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
         {
             put(20, BLADE);
             put(29, BLADE);
@@ -76,7 +76,7 @@ public enum Weapon {
             put(47, HANDLE);
         }
     })),
-    PIRATE_SABER("Piratensäbel", SWORD, 4.3, -1.9),
+    PIRATE_SABER("Piratens\u00e4bel", SWORD, 4.2, -1.9),
     RAPIER("Rapier", SWORD, 4.1, -1.7, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
         {
             put(2, BLADE);
@@ -108,7 +108,7 @@ public enum Weapon {
             put(48, HANDLE);
         }
     })),
-    LUMBERJACK_AXE("Holzfälleraxt", AXE, 4.5, -3.25, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
+    LUMBERJACK_AXE("Holzf\u00e4lleraxt", AXE, 4.5, -3.25, new AdvancedRecipe(new HashMap<Integer, MaterialType>() {
         {
             put(1, BLADE);
             put(3, HANDLE);
@@ -266,7 +266,7 @@ public enum Weapon {
             stars += STAR;
             quality--;
         }
-        lore.add(ChatColor.GREEN + "Qualität: " + ChatColor.GOLD + stars);
+        lore.add(ChatColor.GREEN + "Qualit\u00e4t: " + ChatColor.GOLD + stars);
         lore.add(ChatColor.GREEN + "Schmied: " + ChatColor.GOLD + smith);
         lore.add(ChatColor.GREEN + "Herkunft: " + ChatColor.GOLD + origin);
         meta.setLore(lore);

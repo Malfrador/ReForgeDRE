@@ -36,7 +36,7 @@ public class RecipeListener implements Listener {
         if (ReForgeDRE.getInstance().disabledRecipes.contains(result.getType())) {
             ItemMeta meta = result.getItemMeta();
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.DARK_RED + "Aufwendigere Schwerter und Rüstungen");
+            lore.add(ChatColor.DARK_RED + "Aufwendigere Schwerter und R\u00fcstungen");
             lore.add(ChatColor.DARK_RED + "werden auf " + ChatColor.ITALIC + "Die Reiche Erethons" + ChatColor.DARK_RED + " am");
             lore.add(ChatColor.DARK_RED + "Amboss geschmiedet! Platziere dazu einen");
             lore.add(ChatColor.DARK_RED + "Amboss direkt neben oder auf einem Ofen.");

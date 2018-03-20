@@ -63,7 +63,7 @@ public class JoinListener implements Listener {
             if (!player.isOnline()) {
                 return;
             }
-            player.sendMessage(ChatColor.AQUA + "Willkommen in der Neuen Welt! Euer Gepäck steht bereit.");
+            player.sendMessage(ChatColor.AQUA + "Willkommen in der Neuen Welt! Euer Gep\u00e4ck steht bereit.");
             player.sendMessage(ChatColor.AQUA + "Darf ich fragen, woher Ihr stammt?");
             String pre = ChatColor.BLUE + "> " + ChatColor.GREEN;
             BaseComponent[] cuthalorn = TextComponent.fromLegacyText(pre + "Ich bin ein Farmer aus Cuthalorn auf der Flucht vor dem Krieg.");
@@ -72,7 +72,7 @@ public class JoinListener implements Listener {
             BaseComponent[] hohenstein = TextComponent.fromLegacyText(pre + "Ich studierte in Hohenstein das Wort des Herrn.");
             BaseComponent[] golvathal = TextComponent.fromLegacyText(pre + "Ich kam aus Golvathal, um Waren zu handeln.");
             BaseComponent[] daoshen = TextComponent.fromLegacyText(pre + "\u79c1\u306f\u65e5\u672c\u304b\u3089\u6765\u307e\u3057\u305f!");
-            BaseComponent[] pirate = TextComponent.fromLegacyText(pre + "Das sollte für Euch nicht weiter von Belang sein.");
+            BaseComponent[] pirate = TextComponent.fromLegacyText(pre + "Das sollte f\u00fcr Euch nicht weiter von Belang sein.");
             Arrays.stream(cuthalorn).forEach(c -> c.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/rfgive start cuthalorn")));
             Arrays.stream(arachnida).forEach(c -> c.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/rfgive start arachnida")));
             Arrays.stream(sohothin).forEach(c -> c.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/rfgive start sohothin")));
