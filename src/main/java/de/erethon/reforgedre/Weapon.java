@@ -201,22 +201,22 @@ public enum Weapon {
             damage += damage / 10;
             speed += speed / 10;
             if (new Random().nextInt(100) > 90) {
-                stack.addEnchantment(Enchantment.FIRE_ASPECT, 1);
+                stack.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
             }
             if (new Random().nextInt(100) > 70) {
-                stack.addEnchantment(Enchantment.DURABILITY, 2);
+                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 2);
             }
         } else if (quality == 4) {
             damage += damage / 20;
             speed += speed / 20;
             if (new Random().nextInt(100) > 70) {
-                stack.addEnchantment(Enchantment.DURABILITY, 1);
+                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
             }
         } else if (quality == 2) {
             damage -= damage / 20;
             speed -= speed / 20;
             if (new Random().nextInt(100) > 90) {
-                stack.addEnchantment(Enchantment.VANISHING_CURSE, 1);
+                stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
             } else if (new Random().nextInt() > 60) {
                 stack = new AttributeWrapper(InternalAttribute.GENERIC_MOVEMENT_SPEED, -0.1, InternalOperation.MULTIPLY_SCALAR_1, InternalSlot.MAIN_HAND).applyTo(stack);
             }
@@ -224,7 +224,7 @@ public enum Weapon {
             damage -= damage / 10;
             speed -= speed / 10;
             if (new Random().nextInt(100) > 75) {
-                stack.addEnchantment(Enchantment.VANISHING_CURSE, 1);
+                stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
             } else if (new Random().nextInt() > 60) {
                 stack = new AttributeWrapper(InternalAttribute.GENERIC_MOVEMENT_SPEED, -0.2, InternalOperation.MULTIPLY_SCALAR_1, InternalSlot.MAIN_HAND).applyTo(stack);
             }

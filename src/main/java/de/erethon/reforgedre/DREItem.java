@@ -30,8 +30,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class DREItem {
 
-    public static ItemStack DWARF_PICKAXE = setup(new ItemStack(Material.IRON_PICKAXE), ChatColor.WHITE + "Zwergenspitzhacke", "Spitzhacke", 5, "Aus Arachnida");
-    public static ItemStack HOLY_SWORD = setup(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Szent Kard", "Anderthalbh\u00e4nder", 4, "Aus Sohothin");
+    public static ItemStack DWARF_PICKAXE = setup(new ItemStack(Material.IRON_PICKAXE), ChatColor.WHITE + "Zwergenspitzhacke", "Spitzhacke", 5, "unbekannt", "Arachnida");
+    public static ItemStack HOLY_SWORD = setup(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Szent Kard", "Anderthalbh\u00e4nder", 4, "unbekannt", "Sohothin");
 
     static {
         ItemMeta dMeta = DWARF_PICKAXE.getItemMeta();
@@ -45,12 +45,7 @@ public class DREItem {
         HOLY_SWORD.setItemMeta(hMeta);
     }
 
-    private static ItemStack setup(ItemStack itemStack, String name, String type, int quality, String smith) {
-        itemStack = itemStack.clone();
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(name);
-        List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + type);
+    public static ItemStack setup(ItemStack itemStack, String name, String type, int quality, String smith, String origin) {
         String stars = new String();
         if (quality == -1) {
             stars = "?";
@@ -59,8 +54,21 @@ public class DREItem {
             stars += STAR;
             quality--;
         }
-        lore.add(ChatColor.GREEN + "Qualit\u00e4t: " + ChatColor.GOLD + stars);
+        return setup(itemStack, name, type, null, stars, smith, origin);
+    }
+
+    public static ItemStack setup(ItemStack itemStack, String name, String type, String accessory, String quality, String smith, String origin) {
+        itemStack = itemStack.clone();
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.setDisplayName(name);
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GRAY + type);
+        if (accessory != null) {
+            lore.add(accessory);
+        }
+        lore.add(ChatColor.GREEN + "Qualit\u00e4t: " + ChatColor.GOLD + quality);
         lore.add(ChatColor.GREEN + "Schmied: " + ChatColor.GOLD + smith);
+        lore.add(ChatColor.GREEN + "Herkunft: " + ChatColor.GOLD + origin);
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
         return itemStack;
