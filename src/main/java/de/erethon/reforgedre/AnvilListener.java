@@ -64,13 +64,13 @@ public class AnvilListener implements Listener {
                 if (AdvancedWorkbench.SWITCH.equals(clicked)) {
                     event.setCancelled(true);
                     ((Player) player).playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-                    anvil.nextType();
                     for (ItemStack stack : event.getInventory().getContents()) {
                         if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
                                 && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
                             player.getWorld().dropItem(player.getLocation(), stack);
                         }
                     }
+                    anvil.nextType();
                 } else if (AdvancedWorkbench.PLACEHOLDER.equals(clicked)) {
                     event.setCancelled(true);
                 } else if (event.getSlot() == AdvancedWorkbench.RESULT_SLOT) {
