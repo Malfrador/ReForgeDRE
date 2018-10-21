@@ -35,8 +35,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class AdvancedWorkbench {
 
-    public static final ItemStack PLACEHOLDER = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
-    public static final ItemStack SWITCH = new ItemStack(Material.WORKBENCH);
+    public static final ItemStack PLACEHOLDER = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+    public static final ItemStack SWITCH = new ItemStack(Material.CRAFTING_TABLE);
     public static final int SWITCH_SLOT = 8;
     public static final int RESULT_SLOT = 35;
     public static final ItemStack[] SWORD_TEMPLATE = new ItemStack[54];

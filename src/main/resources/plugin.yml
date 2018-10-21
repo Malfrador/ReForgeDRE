@@ -2,6 +2,7 @@ name: ReForgeDRE
 main: de.erethon.reforgedre.ReForgeDRE
 version: ${project.version}
 author: Daniel Saukel
+api-version: 1.13
 commands:
   reforge:
     description: Gives a ReForgeDRE item

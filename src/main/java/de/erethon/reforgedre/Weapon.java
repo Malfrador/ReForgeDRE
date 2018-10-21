@@ -16,10 +16,6 @@
  */
 package de.erethon.reforgedre;
 
-import de.erethon.commons.item.AttributeWrapper;
-import de.erethon.commons.item.InternalAttribute;
-import de.erethon.commons.item.InternalOperation;
-import de.erethon.commons.item.InternalSlot;
 import de.erethon.factionsxl.FactionsXL;
 import de.erethon.factionsxl.board.Region;
 import de.erethon.factionsxl.config.FMessage;
@@ -30,10 +26,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -170,8 +172,8 @@ public enum Weapon {
     public static final String RUBIES = ChatColor.GRAY + "Mit Rubinen besetzt.";
 
     public enum Type {
-        AXE(Material.IRON_AXE, Material.GOLD_AXE),
-        SWORD(Material.IRON_SWORD, Material.GOLD_SWORD);
+        AXE(Material.IRON_AXE, Material.GOLDEN_AXE),
+        SWORD(Material.IRON_SWORD, Material.GOLDEN_SWORD);
 
         Material iron;
         Material gold;
@@ -185,8 +187,12 @@ public enum Weapon {
     public static final String STAR = "\u2605";
 
     public static String getOrigin(Player player) {
-        Region region = FactionsXL.getInstance().getBoard().getByLocation(player.getLocation());
-        return region != null ? region.getName() : FMessage.MISC_WILDERNESS.getMessage();
+        if (Bukkit.getPluginManager().getPlugin("FactionsXL") != null) {
+            Region region = FactionsXL.getInstance().getBoard().getByLocation(player.getLocation());
+            return region != null ? region.getName() : FMessage.MISC_WILDERNESS.getMessage();
+        } else {
+            return player.getWorld().getName();
+        }
     }
 
     public ItemStack toItemStack(boolean gold, int quality, String smith, String origin) {
@@ -197,6 +203,7 @@ public enum Weapon {
         ItemStack stack = new ItemStack(gold ? base.gold : base.iron);
         double damage = this.damage;
         double speed = this.speed;
+        ItemMeta meta = stack.getItemMeta();
         if (quality == 5) {
             damage += damage / 10;
             speed += speed / 10;
@@ -218,7 +225,8 @@ public enum Weapon {
             if (new Random().nextInt(100) > 90) {
                 stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
             } else if (new Random().nextInt() > 60) {
-                stack = new AttributeWrapper(InternalAttribute.GENERIC_MOVEMENT_SPEED, -0.1, InternalOperation.MULTIPLY_SCALAR_1, InternalSlot.MAIN_HAND).applyTo(stack);
+                AttributeModifier mod = new AttributeModifier(UUID.randomUUID(), "reforgedre.curse1", -0.1, Operation.MULTIPLY_SCALAR_1, EquipmentSlot.HAND);
+                meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, mod);
             }
         } else if (quality == 1) {
             damage -= damage / 10;
@@ -226,12 +234,12 @@ public enum Weapon {
             if (new Random().nextInt(100) > 75) {
                 stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
             } else if (new Random().nextInt() > 60) {
-                stack = new AttributeWrapper(InternalAttribute.GENERIC_MOVEMENT_SPEED, -0.2, InternalOperation.MULTIPLY_SCALAR_1, InternalSlot.MAIN_HAND).applyTo(stack);
+                AttributeModifier mod = new AttributeModifier(UUID.randomUUID(), "reforgedre.curse2", -0.2, Operation.MULTIPLY_SCALAR_1, EquipmentSlot.HAND);
+                meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, mod);
             }
         }
-        stack = new AttributeWrapper(InternalAttribute.GENERIC_ATTACK_DAMAGE, damage, InternalOperation.ADD_NUMBER, InternalSlot.MAIN_HAND).applyTo(stack);
-        stack = new AttributeWrapper(InternalAttribute.GENERIC_ATTACK_SPEED, speed, InternalOperation.ADD_NUMBER, InternalSlot.MAIN_HAND).applyTo(stack);
-        ItemMeta meta = stack.getItemMeta();
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(), "reforgedre.attackDamage", damage, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, new AttributeModifier(UUID.randomUUID(), "reforgedre.attackSpeed", speed, Operation.ADD_NUMBER, EquipmentSlot.HAND));
         String displayName = ChatColor.WHITE + name;
         if (accessory != null && accessory.getItemMeta().hasDisplayName()) {
             displayName = ChatColor.translateAlternateColorCodes('&', accessory.getItemMeta().getDisplayName());

@@ -30,10 +30,16 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class RecipeListener implements Listener {
 
+    private ReForgeDRE plugin;
+
+    public RecipeListener(ReForgeDRE plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onCraftItem(CraftItemEvent event) {
         ItemStack result = event.getInventory().getResult();
-        if (ReForgeDRE.getInstance().disabledRecipes.contains(result.getType())) {
+        if (plugin.disabledRecipes.contains(result.getType())) {
             ItemMeta meta = result.getItemMeta();
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.DARK_RED + "Aufwendigere Schwerter und R\u00fcstungen");

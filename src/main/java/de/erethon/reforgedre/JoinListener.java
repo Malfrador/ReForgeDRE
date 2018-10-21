@@ -39,6 +39,12 @@ public class JoinListener implements Listener {
 
     static Set<UUID> cache = new HashSet<>();
 
+    private ReForgeDRE plugin;
+
+    public JoinListener(ReForgeDRE plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!event.getPlayer().hasPlayedBefore()) {
@@ -46,7 +52,7 @@ public class JoinListener implements Listener {
         } else if (!cache.contains(event.getPlayer().getUniqueId())) {
             return;
         }
-        new JoinItemTask(event.getPlayer()).runTaskLater(ReForgeDRE.getInstance(), 60 * 20);
+        new JoinItemTask(event.getPlayer()).runTaskLater(plugin, 60 * 20);
     }
 
     public class JoinItemTask extends BukkitRunnable {

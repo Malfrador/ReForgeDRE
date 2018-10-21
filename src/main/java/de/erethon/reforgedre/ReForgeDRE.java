@@ -16,8 +16,6 @@
  */
 package de.erethon.reforgedre;
 
-import de.erethon.commons.misc.EnumUtil;
-import de.erethon.commons.misc.NumberUtil;
 import de.erethon.sakura.SakuraItem;
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +23,9 @@ import org.bukkit.Material;
 import static org.bukkit.Material.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.SpawnEggMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,24 +33,17 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ReForgeDRE extends JavaPlugin {
 
-    private static ReForgeDRE instance;
-
-    public List<Material> disabledRecipes = Arrays.asList(DIAMOND_SWORD, IRON_SWORD, GOLD_SWORD, DIAMOND_AXE, IRON_AXE, GOLD_AXE, STONE_AXE, WOOD_AXE,
+    public List<Material> disabledRecipes = Arrays.asList(DIAMOND_SWORD, IRON_SWORD, GOLDEN_SWORD, DIAMOND_AXE, IRON_AXE, GOLDEN_AXE, STONE_AXE, WOODEN_AXE,
             DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, IRON_HELMET, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS,
-            GOLD_HELMET, GOLD_CHESTPLATE, GOLD_LEGGINGS, GOLD_BOOTS);
+            GOLDEN_HELMET, GOLDEN_CHESTPLATE, GOLDEN_LEGGINGS, GOLDEN_BOOTS);
 
     @Override
     public void onEnable() {
-        instance = this;
-        getServer().getPluginManager().registerEvents(new AnvilListener(), this);
-        getServer().getPluginManager().registerEvents(new RecipeListener(), this);
+        getServer().getPluginManager().registerEvents(new AnvilListener(this), this);
+        getServer().getPluginManager().registerEvents(new RecipeListener(this), this);
         getServer().getPluginManager().registerEvents(new ParticleListener(), this);
-        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new InvisibilityListener(), this);
-    }
-
-    public static ReForgeDRE getInstance() {
-        return instance;
     }
 
     @Override
@@ -67,8 +56,8 @@ public class ReForgeDRE extends JavaPlugin {
             PlayerInventory inventory = player.getInventory();
             switch (args[1]) {
                 case "cuthalorn":
-                    inventory.addItem(new ItemStack(Material.IRON_HOE), new ItemStack(Material.BEETROOT_SEEDS),
-                            new ItemStack(Material.SEEDS), new ItemStack(Material.PUMPKIN_SEEDS), new ItemStack(Material.MELON_SEEDS));
+                    inventory.addItem(new ItemStack(IRON_HOE), new ItemStack(BEETROOT_SEEDS),
+                            new ItemStack(WHEAT_SEEDS), new ItemStack(PUMPKIN_SEEDS), new ItemStack(MELON_SEEDS));
                     break;
                 case "arachnida":
                     inventory.addItem(DREItem.DWARF_PICKAXE);
@@ -77,30 +66,27 @@ public class ReForgeDRE extends JavaPlugin {
                     inventory.addItem(DREItem.HOLY_SWORD);
                     break;
                 case "hohenstein":
-                    inventory.addItem(new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1));
+                    inventory.addItem(new ItemStack(GOLDEN_APPLE));
                     break;
                 case "golvathal":
-                    inventory.addItem(new ItemStack(Material.GOLD_INGOT, 64));
+                    inventory.addItem(new ItemStack(GOLD_INGOT, 64));
                     break;
                 case "daoshen":
                     inventory.addItem(Weapon.KATANA.toItemStack(false, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
                     break;
                 case "pirate":
-                    ItemStack parrot = new ItemStack(Material.MONSTER_EGG, 1);
-                    SpawnEggMeta meta = (SpawnEggMeta) parrot.getItemMeta();
-                    meta.setSpawnedType(EntityType.PARROT);
-                    parrot.setItemMeta(meta);
+                    ItemStack parrot = new ItemStack(PARROT_SPAWN_EGG, 1);
                     inventory.addItem(Weapon.PIRATE_SABER.toItemStack(false, 3, "Arrrr!", "7 Weltmeere"), parrot);
                     break;
             }
-            inventory.addItem(new ItemStack(Material.LEATHER_CHESTPLATE), new ItemStack(Material.LEATHER_LEGGINGS),
-                    new ItemStack(Material.LEATHER_BOOTS), new ItemStack(Material.BREAD, 32));
+            inventory.addItem(new ItemStack(LEATHER_CHESTPLATE), new ItemStack(LEATHER_LEGGINGS),
+                    new ItemStack(LEATHER_BOOTS), new ItemStack(BREAD, 32));
             JoinListener.cache.remove(player.getUniqueId());
         }
         if (!sender.isOp()) {
             return false;
         }
-        Weapon weapon = EnumUtil.getEnumIgnoreCase(Weapon.class, args[0]);
+        Weapon weapon = Weapon.valueOf(args[0]);
         if (weapon == null) {
             for (Weapon w : Weapon.values()) {
                 if (w.name.equalsIgnoreCase(args[0])) {
@@ -108,7 +94,7 @@ public class ReForgeDRE extends JavaPlugin {
                 }
             }
         }
-        int quality = args.length >= 2 ? NumberUtil.parseInt(args[1]) : -1;
+        int quality = args.length >= 2 ? Integer.parseInt(args[1]) : -1;
         if (weapon != null) {
             ((Player) sender).getInventory().addItem(weapon.toItemStack(false, quality, "unbekannt", Weapon.getOrigin(player)));
         } else {

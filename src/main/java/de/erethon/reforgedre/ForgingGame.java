@@ -56,6 +56,8 @@ public class ForgingGame {
 
     static final Set<ForgingGame> cache = new HashSet<>();
 
+    private ReForgeDRE plugin;
+
     public Inventory gui;
     public BukkitTask task;
 
@@ -64,7 +66,8 @@ public class ForgingGame {
     public boolean gold;
     public ItemStack accessory;
 
-    public ForgingGame(Player player, Weapon weapon, boolean gold, ItemStack accessory) {
+    public ForgingGame(ReForgeDRE plugin, Player player, Weapon weapon, boolean gold, ItemStack accessory) {
+        this.plugin = plugin;
         cache.add(this);
         this.player = player;
         this.weapon = weapon;
@@ -76,7 +79,7 @@ public class ForgingGame {
 
     public void start() {
         player.openInventory(gui);
-        task = new GameTask().runTaskTimer(ReForgeDRE.getInstance(), 0, 8);
+        task = new GameTask().runTaskTimer(plugin, 0, 8);
     }
 
     public void finish(ItemStack item) {
