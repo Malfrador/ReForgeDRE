@@ -18,9 +18,9 @@ package de.erethon.reforgedre;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.reforgedre.accessory.ParticleListener;
-import de.erethon.reforgedre.equipment.MaterialType;
 import de.erethon.reforgedre.equipment.CustomWeapon;
-import de.erethon.sakura.SakuraItem;
+import de.erethon.reforgedre.equipment.ForgedEquipment;
+import de.erethon.reforgedre.equipment.MaterialType;
 import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Material;
@@ -28,10 +28,7 @@ import static org.bukkit.Material.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
-import de.erethon.reforgedre.equipment.ForgedEquipment;
 
 /**
  * @author Daniel Saukel
@@ -47,46 +44,12 @@ public class ReForgeDRE extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AnvilListener(this), this);
         getServer().getPluginManager().registerEvents(new RecipeListener(this), this);
         getServer().getPluginManager().registerEvents(new ParticleListener(), this);
-        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
-        getServer().getPluginManager().registerEvents(new InvisibilityListener(), this);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player) || args.length < 1) {
             return false;
-        }
-        Player player = (Player) sender;
-        if (args[0].equalsIgnoreCase("start") && args.length == 2 && JoinListener.cache.contains(player.getUniqueId()) | sender.isOp()) {
-            PlayerInventory inventory = player.getInventory();
-            switch (args[1]) {
-                case "cuthalorn":
-                    inventory.addItem(new ItemStack(IRON_HOE), new ItemStack(BEETROOT_SEEDS),
-                            new ItemStack(WHEAT_SEEDS), new ItemStack(PUMPKIN_SEEDS), new ItemStack(MELON_SEEDS));
-                    break;
-                case "arachnida":
-                    inventory.addItem(DREItem.DWARF_PICKAXE.toItemStack());
-                    break;
-                case "sohothin":
-                    inventory.addItem(DREItem.HOLY_SWORD.toItemStack());
-                    break;
-                case "hohenstein":
-                    inventory.addItem(new ItemStack(GOLDEN_APPLE));
-                    break;
-                case "golvathal":
-                    inventory.addItem(new ItemStack(GOLD_INGOT, 64));
-                    break;
-                case "daoshen":
-                    inventory.addItem(CustomWeapon.KATANA.toItemStack(MaterialType.IRON, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
-                    break;
-                case "pirate":
-                    ItemStack parrot = new ItemStack(PARROT_SPAWN_EGG, 1);
-                    inventory.addItem(CustomWeapon.PIRATE_SABER.toItemStack(MaterialType.IRON, 3, "Arrrr!", "7 Weltmeere"), parrot);
-                    break;
-            }
-            inventory.addItem(new ItemStack(LEATHER_CHESTPLATE), new ItemStack(LEATHER_LEGGINGS),
-                    new ItemStack(LEATHER_BOOTS), new ItemStack(BREAD, 32));
-            JoinListener.cache.remove(player.getUniqueId());
         }
         if (!sender.isOp()) {
             return false;
@@ -99,7 +62,7 @@ public class ReForgeDRE extends JavaPlugin {
         }
         int quality = args.length >= 2 ? Integer.parseInt(args[1]) : -1;
         if (weapon != null) {
-            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, "unbekannt", ForgedEquipment.getOrigin(player)));
+            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, "unbekannt", ForgedEquipment.getOrigin((Player) sender)));
         } else {
             return false;
         }
