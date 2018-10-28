@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.erethon.reforgedre;
+package de.erethon.reforgedre.crafting;
 
+import de.erethon.reforgedre.ReForgeDRE;
 import de.erethon.reforgedre.equipment.CustomWeapon;
 import de.erethon.reforgedre.equipment.ForgedEquipment;
 import de.erethon.reforgedre.equipment.MaterialType;

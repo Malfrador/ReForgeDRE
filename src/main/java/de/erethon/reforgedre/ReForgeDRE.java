@@ -18,6 +18,8 @@ package de.erethon.reforgedre;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.reforgedre.accessory.ParticleListener;
+import de.erethon.reforgedre.crafting.AnvilListener;
+import de.erethon.reforgedre.crafting.RecipeListener;
 import de.erethon.reforgedre.equipment.CustomWeapon;
 import de.erethon.reforgedre.equipment.ForgedEquipment;
 import de.erethon.reforgedre.equipment.MaterialType;

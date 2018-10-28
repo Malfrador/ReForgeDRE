@@ -18,6 +18,7 @@ package de.erethon.reforgedre.equipment;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.CustomEquipment;
+import de.erethon.reforgedre.crafting.AdvancedRecipe;
 import java.util.Random;
 import java.util.UUID;
 import org.bukkit.attribute.Attribute;

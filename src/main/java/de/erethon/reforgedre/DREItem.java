@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableMap;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.CustomEquipment;
 import de.erethon.reforgedre.accessory.Accessory;
-import de.erethon.reforgedre.equipment.AdvancedRecipe;
+import de.erethon.reforgedre.crafting.AdvancedRecipe;
 import de.erethon.reforgedre.equipment.Component;
 import static de.erethon.reforgedre.equipment.Component.*;
 import de.erethon.reforgedre.equipment.CustomWeapon;

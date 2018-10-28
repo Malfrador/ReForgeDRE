@@ -20,6 +20,7 @@ import de.erethon.factionsxl.FactionsXL;
 import de.erethon.factionsxl.board.Region;
 import de.erethon.factionsxl.config.FMessage;
 import de.erethon.reforgedre.accessory.Accessory;
+import de.erethon.reforgedre.crafting.AdvancedRecipe;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
