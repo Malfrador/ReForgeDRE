@@ -16,6 +16,10 @@
  */
 package de.erethon.reforgedre;
 
+import de.erethon.reforgedre.accessory.ParticleListener;
+import de.erethon.reforgedre.equipment.Equipment;
+import de.erethon.reforgedre.equipment.MaterialType;
+import de.erethon.reforgedre.equipment.Weapon;
 import de.erethon.sakura.SakuraItem;
 import java.util.Arrays;
 import java.util.List;
@@ -72,11 +76,11 @@ public class ReForgeDRE extends JavaPlugin {
                     inventory.addItem(new ItemStack(GOLD_INGOT, 64));
                     break;
                 case "daoshen":
-                    inventory.addItem(Weapon.KATANA.toItemStack(false, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
+                    inventory.addItem(Weapon.KATANA.toItemStack(MaterialType.IRON, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
                     break;
                 case "pirate":
                     ItemStack parrot = new ItemStack(PARROT_SPAWN_EGG, 1);
-                    inventory.addItem(Weapon.PIRATE_SABER.toItemStack(false, 3, "Arrrr!", "7 Weltmeere"), parrot);
+                    inventory.addItem(Weapon.PIRATE_SABER.toItemStack(MaterialType.IRON, 3, "Arrrr!", "7 Weltmeere"), parrot);
                     break;
             }
             inventory.addItem(new ItemStack(LEATHER_CHESTPLATE), new ItemStack(LEATHER_LEGGINGS),
@@ -86,17 +90,15 @@ public class ReForgeDRE extends JavaPlugin {
         if (!sender.isOp()) {
             return false;
         }
-        Weapon weapon = Weapon.valueOf(args[0]);
-        if (weapon == null) {
-            for (Weapon w : Weapon.values()) {
-                if (w.name.equalsIgnoreCase(args[0])) {
-                    weapon = w;
-                }
+        Weapon weapon = null;
+        for (Weapon w : Weapon.values()) {
+            if (w.getName().equalsIgnoreCase(args[0]) || w.name().equalsIgnoreCase(args[0])) {
+                weapon = w;
             }
         }
         int quality = args.length >= 2 ? Integer.parseInt(args[1]) : -1;
         if (weapon != null) {
-            ((Player) sender).getInventory().addItem(weapon.toItemStack(false, quality, "unbekannt", Weapon.getOrigin(player)));
+            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, "unbekannt", Equipment.getOrigin(player)));
         } else {
             return false;
         }

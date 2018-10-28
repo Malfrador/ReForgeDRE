@@ -16,7 +16,10 @@
  */
 package de.erethon.reforgedre;
 
-import de.erethon.reforgedre.AdvancedRecipe.MaterialType;
+import de.erethon.reforgedre.equipment.Component;
+import de.erethon.reforgedre.equipment.Equipment;
+import de.erethon.reforgedre.equipment.MaterialType;
+import de.erethon.reforgedre.equipment.Weapon;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Bukkit;
@@ -158,7 +161,7 @@ public class AdvancedWorkbench {
         ItemStack[] template;
         int[] craftSlots;
 
-        Type(ItemStack[] template, int... craftSlots) {
+        private Type(ItemStack[] template, int... craftSlots) {
             this.template = template;
             this.craftSlots = craftSlots;
         }
@@ -171,7 +174,7 @@ public class AdvancedWorkbench {
     public Inventory gui;
     public Player player;
     public Weapon weapon;
-    public Boolean gold;
+    public MaterialType materialType;
     public ItemStack accessory;
 
     public AdvancedWorkbench(Player player) {
@@ -201,37 +204,37 @@ public class AdvancedWorkbench {
     }
 
     public void checkRecipes() {
-        Boolean gold = null;
+        MaterialType materialType = null;
         Weapon checked = null;
         for (Weapon weapon : Weapon.values()) {
-            if (weapon.recipe == null) {
+            if (weapon.getRecipe() == null) {
                 continue;
             }
             for (int slot : type.craftSlots) {
-                MaterialType type = weapon.recipe.ingredients.get(slot);
+                Component type = weapon.getRecipe().getIngredients().get(slot);
                 ItemStack ingredient = gui.getItem(slot);
                 if (ingredient == null && type == null) {
                     continue;
                 }
                 if (ingredient == null & type != null || type == null & ingredient != null) {
                     checked = null;
-                    gold = null;
+                    materialType = null;
                     break;
                 }
-                if (ingredient.getAmount() != 1 || !type.materials.contains(ingredient.getType())) {
+                if (ingredient.getAmount() != 1 || !type.getMaterials().contains(ingredient.getType())) {
                     checked = null;
-                    gold = null;
+                    materialType = null;
                     break;
                 }
-                if (type == MaterialType.HANDLE && MaterialType.HANDLE.materials.contains(ingredient.getType()) && ingredient.getType() != Material.STICK) {
+                if (type == Component.HANDLE && Component.HANDLE.getMaterials().contains(ingredient.getType()) && ingredient.getType() != Material.STICK) {
                     accessory = ingredient;
                 }
-                if (type == MaterialType.BLADE) {
-                    if (gold == null) {
-                        gold = ingredient.getType() == Material.GOLD_INGOT;
-                    } else if (gold & ingredient.getType() != Material.GOLD_INGOT || !gold && ingredient.getType() == Material.GOLD_INGOT) {
+                if (type == Component.BLADE) {
+                    if (materialType == null) {
+                        materialType = MaterialType.getByMaterial(ingredient.getType());
+                    } else if (!materialType.getMaterials().contains(ingredient.getType())) {
                         checked = null;
-                        gold = null;
+                        materialType = null;
                         break;
                     }
                 }
@@ -239,14 +242,14 @@ public class AdvancedWorkbench {
                     checked = weapon;
                 }
             }
-            if (checked != null && gold != null) {
+            if (checked != null && materialType != null) {
                 break;
             }
         }
         weapon = checked;
-        this.gold = gold;
-        if (weapon != null && gold != null) {
-            gui.setItem(RESULT_SLOT, weapon.toItemStack(gold, -1, player.getName(), Weapon.getOrigin(player), accessory));
+        this.materialType = materialType;
+        if (weapon != null && materialType != null) {
+            gui.setItem(RESULT_SLOT, weapon.toItemStack(materialType, -1, player.getName(), Equipment.getOrigin(player), accessory));
         } else {
             gui.setItem(RESULT_SLOT, null);
         }

@@ -16,6 +16,9 @@
  */
 package de.erethon.reforgedre;
 
+import de.erethon.reforgedre.equipment.Equipment;
+import de.erethon.reforgedre.equipment.MaterialType;
+import de.erethon.reforgedre.equipment.Weapon;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -63,15 +66,15 @@ public class ForgingGame {
 
     public Player player;
     public Weapon weapon;
-    public boolean gold;
+    public MaterialType materialType;
     public ItemStack accessory;
 
-    public ForgingGame(ReForgeDRE plugin, Player player, Weapon weapon, boolean gold, ItemStack accessory) {
+    public ForgingGame(ReForgeDRE plugin, Player player, Weapon weapon, MaterialType materialType, ItemStack accessory) {
         this.plugin = plugin;
         cache.add(this);
         this.player = player;
         this.weapon = weapon;
-        this.gold = gold;
+        this.materialType = materialType;
         this.accessory = accessory;
         gui = Bukkit.createInventory(null, 54, "Schmieden...");
         gui.setContents(TEMPLATE);
@@ -91,11 +94,11 @@ public class ForgingGame {
 
     public class GameTask extends BukkitRunnable {
 
-        ItemStack item1 = weapon.toItemStack(gold, 1, player.getName(), Weapon.getOrigin(player), accessory);
-        ItemStack item2 = weapon.toItemStack(gold, 2, player.getName(), Weapon.getOrigin(player), accessory);
-        ItemStack item3 = weapon.toItemStack(gold, 3, player.getName(), Weapon.getOrigin(player), accessory);
-        ItemStack item4 = weapon.toItemStack(gold, 4, player.getName(), Weapon.getOrigin(player), accessory);
-        ItemStack item5 = weapon.toItemStack(gold, 5, player.getName(), Weapon.getOrigin(player), accessory);
+        ItemStack item1 = weapon.toItemStack(materialType, 1, player.getName(), Equipment.getOrigin(player), accessory);
+        ItemStack item2 = weapon.toItemStack(materialType, 2, player.getName(), Equipment.getOrigin(player), accessory);
+        ItemStack item3 = weapon.toItemStack(materialType, 3, player.getName(), Equipment.getOrigin(player), accessory);
+        ItemStack item4 = weapon.toItemStack(materialType, 4, player.getName(), Equipment.getOrigin(player), accessory);
+        ItemStack item5 = weapon.toItemStack(materialType, 5, player.getName(), Equipment.getOrigin(player), accessory);
 
         int i, i2, i3, i4, i5 = 0;
         int edgeUpperLeft = 0;

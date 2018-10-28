@@ -14,35 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.erethon.reforgedre;
+package de.erethon.reforgedre.equipment;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.bukkit.Material;
 
 /**
  * @author Daniel Saukel
  */
-public class AdvancedRecipe {
+public enum MaterialType {
 
-    public enum MaterialType {
-        HANDLE(Material.STICK, Material.DIAMOND, Material.EMERALD, Material.QUARTZ, Material.NETHER_STAR, Material.ENDER_PEARL),
-        CROSSGUARD(Material.GOLD_NUGGET, Material.IRON_NUGGET),
-        BLADE(Material.GOLD_INGOT, Material.IRON_INGOT);
+    CHAINMAIL,
+    GOLD(Material.GOLD_INGOT, Material.GOLD_NUGGET),
+    IRON(Material.IRON_INGOT, Material.IRON_NUGGET);
 
-        List<Material> materials;
+    private List<Material> materials;
 
-        MaterialType(Material... materials) {
-            this.materials = Arrays.asList(materials);
-        }
+    private MaterialType(Material... materials) {
+        this.materials = Arrays.asList(materials);
     }
 
-    public Map<Integer, MaterialType> ingredients = new HashMap<>();
+    public List<Material> getMaterials() {
+        return materials;
+    }
 
-    public AdvancedRecipe(Map<Integer, MaterialType> ingredients) {
-        this.ingredients = ingredients;
+    public static MaterialType getByMaterial(Material material) {
+        for (MaterialType type : values()) {
+            if (type.materials.contains(material)) {
+                return type;
+            }
+        }
+        return null;
     }
 
 }

@@ -16,7 +16,8 @@
  */
 package de.erethon.reforgedre;
 
-import static de.erethon.reforgedre.Weapon.STAR;
+import de.erethon.reforgedre.accessory.Accessory;
+import static de.erethon.reforgedre.equipment.Equipment.STAR;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -40,13 +41,13 @@ public class DREItem {
         ItemMeta hMeta = HOLY_SWORD.getItemMeta();
         hMeta.addEnchant(Enchantment.DAMAGE_UNDEAD, 2, true);
         List<String> lore = hMeta.getLore();
-        lore.add(1, Weapon.RUBIES);
+        lore.add(1, Accessory.RUBIES.getLore());
         hMeta.setLore(lore);
         HOLY_SWORD.setItemMeta(hMeta);
     }
 
     public static ItemStack setup(ItemStack itemStack, String name, String type, int quality, String smith, String origin) {
-        String stars = new String();
+        String stars = "";
         if (quality == -1) {
             stars = "?";
         }

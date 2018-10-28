@@ -76,7 +76,7 @@ public class AnvilListener implements Listener {
                 } else if (event.getSlot() == AdvancedWorkbench.RESULT_SLOT) {
                     event.setCancelled(true);
                     if (anvil.weapon != null) {
-                        new ForgingGame(plugin, (Player) player, anvil.weapon, anvil.gold, anvil.accessory).start();
+                        new ForgingGame(plugin, (Player) player, anvil.weapon, anvil.materialType, anvil.accessory).start();
                     }
                 } else {
                     new BukkitRunnable() {
@@ -110,7 +110,7 @@ public class AnvilListener implements Listener {
                 } else if (event.getRawSlots().contains(AdvancedWorkbench.RESULT_SLOT)) {
                     event.setCancelled(true);
                     if (anvil.weapon != null) {
-                        new ForgingGame(plugin, (Player) event.getWhoClicked(), anvil.weapon, anvil.gold, anvil.accessory).start();
+                        new ForgingGame(plugin, (Player) event.getWhoClicked(), anvil.weapon, anvil.materialType, anvil.accessory).start();
                     }
                 } else {
                     new BukkitRunnable() {
