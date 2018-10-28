@@ -16,6 +16,7 @@
  */
 package de.erethon.reforgedre.crafting;
 
+import de.erethon.reforgedre.ReConfig;
 import de.erethon.reforgedre.ReForgeDRE;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -131,7 +132,7 @@ public class AnvilListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (event.getPlayer().getOpenInventory().getTitle().equals("Schmieden...")) {
+                if (event.getPlayer().getOpenInventory().getTitle().equals(ReConfig.ANVIL_FORGING)) {
                     return;
                 }
                 for (AdvancedWorkbench anvil : AdvancedWorkbench.cache) {

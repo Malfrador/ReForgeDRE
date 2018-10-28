@@ -16,7 +16,7 @@
  */
 package de.erethon.reforgedre.accessory;
 
-import org.bukkit.ChatColor;
+import de.erethon.reforgedre.ReConfig;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -28,12 +28,12 @@ import org.bukkit.inventory.ItemStack;
  */
 public enum Accessory {
 
-    DIAMONDS(Material.DIAMOND, ChatColor.GRAY + "Mit Diamanten besetzt.", .01f, 1f, .75f),
-    EMERALDS(Material.EMERALD, ChatColor.GRAY + "Mit Smaragden besetzt.", .01f, 1f, 0f),
-    QUARTZ(Material.QUARTZ, ChatColor.GRAY + "Mit Quarz besetzt.", .95f, .675f, .675f),
-    NETHER_STAR(Material.NETHER_STAR, ChatColor.GRAY + "Mit Netherstern besetzt.", 0f, 1f, 0f),
-    PEARLS(Material.ENDER_PEARL, ChatColor.GRAY + "Mit Perlen besetzt.", .01f, .25f, .1f),
-    RUBIES(null, ChatColor.GRAY + "Mit Rubinen besetzt.", 0f, 0f, 0f);
+    DIAMONDS(Material.DIAMOND, ReConfig.ACCESSORY_DIAMONDS, .01f, 1f, .75f),
+    EMERALDS(Material.EMERALD, ReConfig.ACCESSORY_EMERALDS, .01f, 1f, 0f),
+    QUARTZ(Material.QUARTZ, ReConfig.ACCESSORY_QUARTZ, .95f, .675f, .675f),
+    NETHER_STAR(Material.NETHER_STAR, ReConfig.ACCESSORY_NETHER_STAR, 0f, 1f, 0f),
+    PEARLS(Material.ENDER_PEARL, ReConfig.ACCESSORY_PEARLS, .01f, .25f, .1f),
+    RUBIES(null, ReConfig.ACCESSORY_RUBIES, 0f, 0f, 0f);
 
     private Material craftingMaterial;
     private String lore;

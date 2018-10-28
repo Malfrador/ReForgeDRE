@@ -16,6 +16,7 @@
  */
 package de.erethon.reforgedre.crafting;
 
+import de.erethon.reforgedre.ReConfig;
 import de.erethon.reforgedre.ReForgeDRE;
 import de.erethon.reforgedre.equipment.CustomWeapon;
 import de.erethon.reforgedre.equipment.ForgedEquipment;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -47,10 +47,10 @@ public class ForgingGame {
 
     static {
         ItemMeta meta = WATER.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_RED + "Falten... Schmelzen... Abschrecken!");
+        meta.setDisplayName(ReConfig.ANVIL_INSTRUCT_1);
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Versuche, die beste Waffe");
-        lore.add(ChatColor.GRAY + "zu erwischen, bevor sie bricht!");
+        lore.add(ReConfig.ANVIL_INSTRUCT_2);
+        lore.add(ReConfig.ANVIL_INSTRUCT_3);
         meta.setLore(lore);
         WATER.setItemMeta(meta);
         FURNACE.setItemMeta(meta);
@@ -77,7 +77,7 @@ public class ForgingGame {
         this.weapon = weapon;
         this.materialType = materialType;
         this.accessory = accessory;
-        gui = Bukkit.createInventory(null, 54, "Schmieden...");
+        gui = Bukkit.createInventory(null, 54, ReConfig.ANVIL_FORGING);
         gui.setContents(TEMPLATE);
     }
 

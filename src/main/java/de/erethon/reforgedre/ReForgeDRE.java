@@ -64,7 +64,7 @@ public class ReForgeDRE extends JavaPlugin {
         }
         int quality = args.length >= 2 ? Integer.parseInt(args[1]) : -1;
         if (weapon != null) {
-            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, "unbekannt", ForgedEquipment.getOrigin((Player) sender)));
+            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, ReConfig.ITEM_META_UNKNOWN, ForgedEquipment.getOrigin((Player) sender)));
         } else {
             return false;
         }

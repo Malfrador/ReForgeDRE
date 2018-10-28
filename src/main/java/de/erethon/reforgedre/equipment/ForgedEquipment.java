@@ -19,6 +19,7 @@ package de.erethon.reforgedre.equipment;
 import de.erethon.factionsxl.FactionsXL;
 import de.erethon.factionsxl.board.Region;
 import de.erethon.factionsxl.config.FMessage;
+import de.erethon.reforgedre.ReConfig;
 import de.erethon.reforgedre.accessory.Accessory;
 import de.erethon.reforgedre.crafting.AdvancedRecipe;
 import java.util.ArrayList;
@@ -92,9 +93,9 @@ public interface ForgedEquipment {
             stars += STAR;
             quality--;
         }
-        lore.add(ChatColor.GREEN + "Qualit\u00e4t: " + ChatColor.GOLD + stars);
-        lore.add(ChatColor.GREEN + "Schmied: " + ChatColor.GOLD + smith);
-        lore.add(ChatColor.GREEN + "Herkunft: " + ChatColor.GOLD + origin);
+        lore.add(ReConfig.ITEM_META_QUALITY + stars);
+        lore.add(ReConfig.ITEM_META_SMITH + smith);
+        lore.add(ReConfig.ITEM_META_ORIGIN + origin);
         meta.setLore(lore);
     }
 

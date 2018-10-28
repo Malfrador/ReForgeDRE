@@ -16,10 +16,10 @@
  */
 package de.erethon.reforgedre.crafting;
 
+import de.erethon.reforgedre.ReConfig;
 import de.erethon.reforgedre.ReForgeDRE;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -43,10 +43,10 @@ public class RecipeListener implements Listener {
         if (plugin.disabledRecipes.contains(result.getType())) {
             ItemMeta meta = result.getItemMeta();
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.DARK_RED + "Aufwendigere Schwerter und R\u00fcstungen");
-            lore.add(ChatColor.DARK_RED + "werden auf " + ChatColor.ITALIC + "Die Reiche Erethons" + ChatColor.DARK_RED + " am");
-            lore.add(ChatColor.DARK_RED + "Amboss geschmiedet! Platziere dazu einen");
-            lore.add(ChatColor.DARK_RED + "Amboss direkt neben oder auf einem Ofen.");
+            lore.add(ReConfig.CRAFTING_BLOCKED_1);
+            lore.add(ReConfig.CRAFTING_BLOCKED_2);
+            lore.add(ReConfig.CRAFTING_BLOCKED_3);
+            lore.add(ReConfig.CRAFTING_BLOCKED_4);
             meta.setLore(lore);
             result.setItemMeta(meta);
             event.setCancelled(true);

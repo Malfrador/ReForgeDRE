@@ -147,9 +147,9 @@ public class DREItem {
 
     public static String[] buildLore(String quality, String smith, String origin) {
         return new String[]{
-            ChatColor.GREEN + "Qualit\u00e4t: " + ChatColor.GOLD + quality,
-            ChatColor.GREEN + "Schmied: " + ChatColor.GOLD + smith,
-            ChatColor.GREEN + "Herkunft: " + ChatColor.GOLD + origin
+            ReConfig.ITEM_META_QUALITY + quality,
+            ReConfig.ITEM_META_SMITH + ChatColor.GOLD + smith,
+            ReConfig.ITEM_META_ORIGIN + origin
         };
     }
 
