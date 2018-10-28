@@ -16,9 +16,7 @@
  */
 package de.erethon.reforgedre.equipment;
 
-import com.google.common.collect.ImmutableMap;
-import static de.erethon.reforgedre.equipment.Component.*;
-import static de.erethon.reforgedre.equipment.EquipmentType.*;
+import de.erethon.caliburn.CaliburnAPI;
 import java.util.Random;
 import java.util.UUID;
 import org.bukkit.attribute.Attribute;
@@ -32,53 +30,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author Daniel Saukel
  */
-public enum Armor implements Equipment {
+public class CustomArmor extends de.erethon.caliburn.item.CustomEquipment implements ForgedEquipment {
 
-    TEST("Test", HELMET, 0.0, 0.0, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(1, BLADE)
-            .put(3, HANDLE)
-            .put(5, BLADE)
-            .put(10, BLADE)
-            .put(11, BLADE)
-            .put(12, HANDLE)
-            .put(13, BLADE)
-            .put(14, BLADE)
-            .put(19, BLADE)
-            .put(23, BLADE)
-            .put(21, HANDLE)
-            .put(30, HANDLE)
-            .put(39, HANDLE)
-            .put(48, HANDLE)
-            .build()));
-
-    private String name;
     private EquipmentType base;
     private double armor;
     private double armorToughness;
     private AdvancedRecipe recipe;
 
-    private Armor(String name, EquipmentType base, double armor, double armorToughness) {
-        this.name = name;
+    public CustomArmor(String name, EquipmentType base, double armor, double armorToughness) {
+        super(CaliburnAPI.getInstance(), name);
         this.base = base;
         this.armor = armor;
         this.armorToughness = armorToughness;
     }
 
-    private Armor(String name, EquipmentType base, double armor, double armorToughness, AdvancedRecipe recipe) {
-        this.name = name;
-        this.base = base;
-        this.armor = armor;
-        this.armorToughness = armorToughness;
+    public CustomArmor(String name, EquipmentType base, double armor, double armorToughness, AdvancedRecipe recipe) {
+        this(name, base, armor, armorToughness);
         this.recipe = recipe;
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public EquipmentType getBase() {
+    public EquipmentType getBaseType() {
         return base;
     }
 

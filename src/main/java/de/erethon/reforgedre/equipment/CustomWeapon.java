@@ -16,9 +16,8 @@
  */
 package de.erethon.reforgedre.equipment;
 
-import com.google.common.collect.ImmutableMap;
-import static de.erethon.reforgedre.equipment.Component.*;
-import static de.erethon.reforgedre.equipment.EquipmentType.*;
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.CustomEquipment;
 import java.util.Random;
 import java.util.UUID;
 import org.bukkit.attribute.Attribute;
@@ -32,121 +31,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author Daniel Saukel
  */
-public enum Weapon implements Equipment {
+public class CustomWeapon extends CustomEquipment implements ForgedEquipment {
 
-    DAGGER("Dolch", SWORD, 3.0, 0.0, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(20, BLADE)
-            .put(29, BLADE)
-            .put(37, CROSSGUARD)
-            .put(38, HANDLE)
-            .put(39, CROSSGUARD)
-            .put(47, HANDLE)
-            .build())),
-    KATANA("Katana", SWORD, 4.8, -2.15, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(2, BLADE)
-            .put(11, BLADE)
-            .put(20, BLADE)
-            .put(29, BLADE)
-            .put(38, HANDLE)
-            .put(47, HANDLE)
-            .build())),
-    LONGSWORD("Langschwert", SWORD, 7.0, -2.8, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(2, BLADE)
-            .put(11, BLADE)
-            .put(20, BLADE)
-            .put(27, CROSSGUARD)
-            .put(28, CROSSGUARD)
-            .put(29, BLADE)
-            .put(30, CROSSGUARD)
-            .put(31, CROSSGUARD)
-            .put(38, HANDLE)
-            .put(47, HANDLE)
-            .build())),
-    PIRATE_SABER("Piratens\u00e4bel", SWORD, 4.2, -1.9),
-    RAPIER("Rapier", SWORD, 4.1, -1.7, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(2, BLADE)
-            .put(11, BLADE)
-            .put(20, BLADE)
-            .put(27, CROSSGUARD)
-            .put(28, CROSSGUARD)
-            .put(29, BLADE)
-            .put(37, CROSSGUARD)
-            .put(38, HANDLE)
-            .put(47, HANDLE)
-            .build())),
-    KNIGHTLY_SWORD("Ritterschwert", SWORD, 5.5, -2.4, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(11, BLADE)
-            .put(12, BLADE)
-            .put(20, BLADE)
-            .put(21, BLADE)
-            .put(27, CROSSGUARD)
-            .put(28, CROSSGUARD)
-            .put(29, BLADE)
-            .put(30, BLADE)
-            .put(31, CROSSGUARD)
-            .put(32, CROSSGUARD)
-            .put(38, HANDLE)
-            .put(39, HANDLE)
-            .put(47, HANDLE)
-            .put(48, HANDLE)
-            .build())),
-    LUMBERJACK_AXE("Holzf\u00e4lleraxt", AXE, 4.5, -3.25, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(1, BLADE)
-            .put(3, HANDLE)
-            .put(10, BLADE)
-            .put(11, BLADE)
-            .put(12, HANDLE)
-            .put(19, BLADE)
-            .put(21, HANDLE)
-            .put(30, HANDLE)
-            .put(39, HANDLE)
-            .put(48, HANDLE)
-            .build())),
-    BATTLEAXE("Streitaxt", AXE, 8.0, -3.25, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
-            .put(1, BLADE)
-            .put(3, HANDLE)
-            .put(5, BLADE)
-            .put(10, BLADE)
-            .put(11, BLADE)
-            .put(12, HANDLE)
-            .put(13, BLADE)
-            .put(14, BLADE)
-            .put(19, BLADE)
-            .put(23, BLADE)
-            .put(21, HANDLE)
-            .put(30, HANDLE)
-            .put(39, HANDLE)
-            .put(48, HANDLE)
-            .build()));
-
-    private String name;
     private EquipmentType base;
     private double damage;
     private double speed;
     private AdvancedRecipe recipe;
 
-    private Weapon(String name, EquipmentType base, double damage, double speed) {
-        this.name = name;
+    public CustomWeapon(String name, EquipmentType base, double damage, double speed) {
+        super(CaliburnAPI.getInstance(), name);
         this.base = base;
         this.damage = damage;
         this.speed = speed;
     }
 
-    private Weapon(String name, EquipmentType base, double damage, double speed, AdvancedRecipe recipe) {
-        this.name = name;
-        this.base = base;
-        this.damage = damage;
-        this.speed = speed;
+    public CustomWeapon(String name, EquipmentType base, double damage, double speed, AdvancedRecipe recipe) {
+        this(name, base, damage, speed);
         this.recipe = recipe;
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public EquipmentType getBase() {
+    public EquipmentType getBaseType() {
         return base;
     }
 

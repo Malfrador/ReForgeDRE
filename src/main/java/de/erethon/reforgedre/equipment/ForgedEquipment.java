@@ -31,7 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author Daniel Saukel
  */
-public interface Equipment {
+public interface ForgedEquipment {
 
     static final String STAR = "\u2605";
 
@@ -46,7 +46,7 @@ public interface Equipment {
 
     String getName();
 
-    EquipmentType getBase();
+    EquipmentType getBaseType();
 
     AdvancedRecipe getRecipe();
 

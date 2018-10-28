@@ -38,6 +38,12 @@
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
+            <artifactId>caliburn</artifactId>
+            <version>0.5.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon</groupId>
             <artifactId>factionsxl</artifactId>
             <version>0.5-SNAPSHOT</version>
             <scope>provided</scope>

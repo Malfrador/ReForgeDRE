@@ -16,10 +16,11 @@
  */
 package de.erethon.reforgedre;
 
+import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.reforgedre.equipment.Component;
-import de.erethon.reforgedre.equipment.Equipment;
+import de.erethon.reforgedre.equipment.CustomWeapon;
+import de.erethon.reforgedre.equipment.ForgedEquipment;
 import de.erethon.reforgedre.equipment.MaterialType;
-import de.erethon.reforgedre.equipment.Weapon;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Bukkit;
@@ -37,7 +38,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  * @author Daniel Saukel
  */
 public class AdvancedWorkbench {
-
+    
     public static final ItemStack PLACEHOLDER = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
     public static final ItemStack SWITCH = new ItemStack(Material.CRAFTING_TABLE);
     public static final int SWITCH_SLOT = 8;
@@ -48,7 +49,7 @@ public class AdvancedWorkbench {
     public static final ItemStack[] CHESTPLATE_TEMPLATE = new ItemStack[54];
     public static final ItemStack[] LEGGINGS_TEMPLATE = new ItemStack[54];
     public static final ItemStack[] BOOTS_TEMPLATE = new ItemStack[54];
-
+    
     static {
         ItemMeta swMeta = SWITCH.getItemMeta();
         swMeta.setDisplayName(ChatColor.YELLOW + "Template wechseln");
@@ -56,7 +57,7 @@ public class AdvancedWorkbench {
         ItemMeta plMeta = PLACEHOLDER.getItemMeta();
         plMeta.setDisplayName(ChatColor.RESET.toString());
         PLACEHOLDER.setItemMeta(plMeta);
-
+        
         int i = -1;
         i = -1;
         slots:
@@ -72,7 +73,7 @@ public class AdvancedWorkbench {
             }
         }
         SWORD_TEMPLATE[8] = SWITCH;
-
+        
         i = -1;
         slots:
         while (i != 53) {
@@ -87,7 +88,7 @@ public class AdvancedWorkbench {
             }
         }
         AXE_TEMPLATE[8] = SWITCH;
-
+        
         i = -1;
         slots:
         while (i != 53) {
@@ -102,7 +103,7 @@ public class AdvancedWorkbench {
             }
         }
         HELMET_TEMPLATE[8] = SWITCH;
-
+        
         i = -1;
         slots:
         while (i != 53) {
@@ -117,7 +118,7 @@ public class AdvancedWorkbench {
             }
         }
         CHESTPLATE_TEMPLATE[8] = SWITCH;
-
+        
         i = -1;
         slots:
         while (i != 53) {
@@ -132,7 +133,7 @@ public class AdvancedWorkbench {
             }
         }
         LEGGINGS_TEMPLATE[8] = SWITCH;
-
+        
         i = -1;
         slots:
         while (i != 53) {
@@ -148,48 +149,48 @@ public class AdvancedWorkbench {
         }
         BOOTS_TEMPLATE[8] = SWITCH;
     }
-
+    
     public enum Type {
-
+        
         SWORD(SWORD_TEMPLATE, 2, 3, 11, 12, 20, 21, 27, 28, 29, 30, 31, 32, 37, 38, 39, 40, 47, 48),
         AXE(AXE_TEMPLATE, 1, 3, 5, 10, 11, 12, 13, 14, 19, 21, 23, 30, 39, 48),
         HELMET(HELMET_TEMPLATE, 0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22),
         CHESTPLATE(CHESTPLATE_TEMPLATE, 0, 1, 5, 6, 9, 10, 11, 13, 14, 15, 19, 20, 21, 22, 23, 28, 29, 30, 31, 32, 37, 38, 39, 40, 41, 47, 48, 49),
         LEGGINGS(LEGGINGS_TEMPLATE, 0, 1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 14, 18, 19, 22, 23, 27, 28, 31, 32, 36, 37, 40, 41, 45, 46, 49, 50),
         BOOTS(BOOTS_TEMPLATE, 0, 1, 9, 10, 11, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31);
-
+        
         ItemStack[] template;
         int[] craftSlots;
-
+        
         private Type(ItemStack[] template, int... craftSlots) {
             this.template = template;
             this.craftSlots = craftSlots;
         }
-
+        
     }
-
+    
     static final Set<AdvancedWorkbench> cache = new HashSet<>();
-
+    
     public Type type;
     public Inventory gui;
     public Player player;
-    public Weapon weapon;
+    public CustomWeapon weapon;
     public MaterialType materialType;
     public ItemStack accessory;
-
+    
     public AdvancedWorkbench(Player player) {
         cache.add(this);
         this.player = player;
         gui = Bukkit.createInventory(null, 54, "Amboss");
         applyType(Type.SWORD);
     }
-
+    
     public void applyType(Type type) {
         this.type = type;
         gui.clear();
         gui.setContents(type.template);
     }
-
+    
     public void nextType() {
         for (Type next : Type.values()) {
             if (type == next) {
@@ -202,11 +203,11 @@ public class AdvancedWorkbench {
             applyType(Type.SWORD);
         }
     }
-
+    
     public void checkRecipes() {
         MaterialType materialType = null;
-        Weapon checked = null;
-        for (Weapon weapon : Weapon.values()) {
+        CustomWeapon checked = null;
+        for (CustomWeapon weapon : CaliburnAPI.getInstance().getExItems(CustomWeapon.class)) {
             if (weapon.getRecipe() == null) {
                 continue;
             }
@@ -249,12 +250,12 @@ public class AdvancedWorkbench {
         weapon = checked;
         this.materialType = materialType;
         if (weapon != null && materialType != null) {
-            gui.setItem(RESULT_SLOT, weapon.toItemStack(materialType, -1, player.getName(), Equipment.getOrigin(player), accessory));
+            gui.setItem(RESULT_SLOT, weapon.toItemStack(materialType, -1, player.getName(), ForgedEquipment.getOrigin(player), accessory));
         } else {
             gui.setItem(RESULT_SLOT, null);
         }
     }
-
+    
     public static boolean isAdvancedWorkbench(Block block) {
         if (block.getType() == Material.ANVIL) {
             return block.getRelative(BlockFace.EAST).getState() instanceof Furnace || block.getRelative(BlockFace.WEST).getState() instanceof Furnace
@@ -268,5 +269,5 @@ public class AdvancedWorkbench {
             return false;
         }
     }
-
+    
 }

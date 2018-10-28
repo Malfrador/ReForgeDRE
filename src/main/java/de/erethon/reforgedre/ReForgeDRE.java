@@ -16,10 +16,10 @@
  */
 package de.erethon.reforgedre;
 
+import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.reforgedre.accessory.ParticleListener;
-import de.erethon.reforgedre.equipment.Equipment;
 import de.erethon.reforgedre.equipment.MaterialType;
-import de.erethon.reforgedre.equipment.Weapon;
+import de.erethon.reforgedre.equipment.CustomWeapon;
 import de.erethon.sakura.SakuraItem;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
+import de.erethon.reforgedre.equipment.ForgedEquipment;
 
 /**
  * @author Daniel Saukel
@@ -64,10 +65,10 @@ public class ReForgeDRE extends JavaPlugin {
                             new ItemStack(WHEAT_SEEDS), new ItemStack(PUMPKIN_SEEDS), new ItemStack(MELON_SEEDS));
                     break;
                 case "arachnida":
-                    inventory.addItem(DREItem.DWARF_PICKAXE);
+                    inventory.addItem(DREItem.DWARF_PICKAXE.toItemStack());
                     break;
                 case "sohothin":
-                    inventory.addItem(DREItem.HOLY_SWORD);
+                    inventory.addItem(DREItem.HOLY_SWORD.toItemStack());
                     break;
                 case "hohenstein":
                     inventory.addItem(new ItemStack(GOLDEN_APPLE));
@@ -76,11 +77,11 @@ public class ReForgeDRE extends JavaPlugin {
                     inventory.addItem(new ItemStack(GOLD_INGOT, 64));
                     break;
                 case "daoshen":
-                    inventory.addItem(Weapon.KATANA.toItemStack(MaterialType.IRON, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
+                    inventory.addItem(CustomWeapon.KATANA.toItemStack(MaterialType.IRON, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
                     break;
                 case "pirate":
                     ItemStack parrot = new ItemStack(PARROT_SPAWN_EGG, 1);
-                    inventory.addItem(Weapon.PIRATE_SABER.toItemStack(MaterialType.IRON, 3, "Arrrr!", "7 Weltmeere"), parrot);
+                    inventory.addItem(CustomWeapon.PIRATE_SABER.toItemStack(MaterialType.IRON, 3, "Arrrr!", "7 Weltmeere"), parrot);
                     break;
             }
             inventory.addItem(new ItemStack(LEATHER_CHESTPLATE), new ItemStack(LEATHER_LEGGINGS),
@@ -90,15 +91,15 @@ public class ReForgeDRE extends JavaPlugin {
         if (!sender.isOp()) {
             return false;
         }
-        Weapon weapon = null;
-        for (Weapon w : Weapon.values()) {
-            if (w.getName().equalsIgnoreCase(args[0]) || w.name().equalsIgnoreCase(args[0])) {
+        CustomWeapon weapon = null;
+        for (CustomWeapon w : CaliburnAPI.getInstance().getExItems(CustomWeapon.class)) {
+            if (w.getName().equalsIgnoreCase(args[0])) {
                 weapon = w;
             }
         }
         int quality = args.length >= 2 ? Integer.parseInt(args[1]) : -1;
         if (weapon != null) {
-            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, "unbekannt", Equipment.getOrigin(player)));
+            ((Player) sender).getInventory().addItem(weapon.toItemStack(MaterialType.IRON, quality, "unbekannt", ForgedEquipment.getOrigin(player)));
         } else {
             return false;
         }
