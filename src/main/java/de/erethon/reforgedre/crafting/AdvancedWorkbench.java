@@ -22,8 +22,8 @@ import de.erethon.reforgedre.equipment.Component;
 import de.erethon.reforgedre.equipment.CustomWeapon;
 import de.erethon.reforgedre.equipment.ForgedEquipment;
 import de.erethon.reforgedre.equipment.MaterialType;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -170,20 +170,24 @@ public class AdvancedWorkbench {
 
     }
 
-    static final Set<AdvancedWorkbench> cache = new HashSet<>();
+    static final List<AdvancedWorkbench> cache = new ArrayList<>();
 
-    public Type type;
-    public Inventory gui;
-    public Player player;
-    public CustomWeapon weapon;
-    public MaterialType materialType;
-    public ItemStack accessory;
+    private Type type;
+    private Inventory gui;
+    private Player player;
+    private ForgedEquipment result;
+    private MaterialType materialType;
+    private ItemStack accessory;
 
     public AdvancedWorkbench(Player player) {
         cache.add(this);
         this.player = player;
         gui = Bukkit.createInventory(null, 54, ReConfig.ANVIL_NAME);
         applyType(Type.SWORD);
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public void applyType(Type type) {
@@ -203,6 +207,26 @@ public class AdvancedWorkbench {
         if (type == null) {
             applyType(Type.SWORD);
         }
+    }
+
+    public Inventory getGUI() {
+        return gui;
+    }
+
+    public ForgedEquipment getResult() {
+        return result;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
+
+    public ItemStack getAccessory() {
+        return accessory;
     }
 
     public void checkRecipes() {
@@ -248,10 +272,10 @@ public class AdvancedWorkbench {
                 break;
             }
         }
-        weapon = checked;
+        result = checked;
         this.materialType = materialType;
-        if (weapon != null && materialType != null) {
-            gui.setItem(RESULT_SLOT, weapon.toItemStack(materialType, -1, player.getName(), ForgedEquipment.getOrigin(player), accessory));
+        if (result != null && materialType != null) {
+            gui.setItem(RESULT_SLOT, result.toItemStack(materialType, -1, player.getName(), ForgedEquipment.getOrigin(player), accessory));
         } else {
             gui.setItem(RESULT_SLOT, null);
         }

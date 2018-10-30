@@ -54,7 +54,7 @@ public class AnvilListener implements Listener {
             return;
         }
         event.setCancelled(true);
-        event.getPlayer().openInventory(new AdvancedWorkbench(event.getPlayer()).gui);
+        event.getPlayer().openInventory(new AdvancedWorkbench(event.getPlayer()).getGUI());
     }
 
     @EventHandler
@@ -62,13 +62,13 @@ public class AnvilListener implements Listener {
         HumanEntity player = event.getWhoClicked();
         ItemStack clicked = event.getCurrentItem();
         for (final AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
-            if (event.getInventory() != null && anvil.gui.equals(event.getInventory())) {
+            if (event.getInventory() != null && anvil.getGUI().equals(event.getInventory())) {
                 if (AdvancedWorkbench.SWITCH.equals(clicked)) {
                     event.setCancelled(true);
                     ((Player) player).playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
                     for (ItemStack stack : event.getInventory().getContents()) {
                         if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
-                                && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                                && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.getGUI().getItem(AdvancedWorkbench.RESULT_SLOT))) {
                             player.getWorld().dropItem(player.getLocation(), stack);
                         }
                     }
@@ -77,8 +77,8 @@ public class AnvilListener implements Listener {
                     event.setCancelled(true);
                 } else if (event.getSlot() == AdvancedWorkbench.RESULT_SLOT) {
                     event.setCancelled(true);
-                    if (anvil.weapon != null) {
-                        new ForgingGame(plugin, (Player) player, anvil.weapon, anvil.materialType, anvil.accessory).start();
+                    if (anvil.getResult() != null) {
+                        new ForgingGame(plugin, (Player) player, anvil.getResult(), anvil.getMaterialType(), anvil.getAccessory()).start();
                     }
                 } else {
                     new BukkitRunnable() {
@@ -92,7 +92,7 @@ public class AnvilListener implements Listener {
             }
         }
         for (ForgingGame game : ForgingGame.cache) {
-            if (event.getInventory() != null && game.gui.equals(event.getInventory())) {
+            if (event.getInventory() != null && game.getGUI().equals(event.getInventory())) {
                 if (ForgingGame.FURNACE.equals(clicked) || ForgingGame.WATER.equals(clicked)) {
                     event.setCancelled(true);
                 } else if (clicked != null && clicked.getType() != Material.AIR) {
@@ -106,13 +106,13 @@ public class AnvilListener implements Listener {
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
         for (final AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
-            if (event.getInventory() != null && anvil.gui.equals(event.getInventory())) {
+            if (event.getInventory() != null && anvil.getGUI().equals(event.getInventory())) {
                 if (AdvancedWorkbench.PLACEHOLDER.equals(event.getCursor())) {
                     event.setCancelled(true);
                 } else if (event.getRawSlots().contains(AdvancedWorkbench.RESULT_SLOT)) {
                     event.setCancelled(true);
-                    if (anvil.weapon != null) {
-                        new ForgingGame(plugin, (Player) event.getWhoClicked(), anvil.weapon, anvil.materialType, anvil.accessory).start();
+                    if (anvil.getResult() != null) {
+                        new ForgingGame(plugin, (Player) event.getWhoClicked(), anvil.getResult(), anvil.getMaterialType(), anvil.getAccessory()).start();
                     }
                 } else {
                     new BukkitRunnable() {
@@ -136,10 +136,10 @@ public class AnvilListener implements Listener {
                     return;
                 }
                 for (AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
-                    if (anvil.gui.equals(event.getInventory())) {
+                    if (anvil.getGUI().equals(event.getInventory())) {
                         for (ItemStack stack : event.getInventory().getContents()) {
                             if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
-                                    && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                                    && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.getGUI().getItem(AdvancedWorkbench.RESULT_SLOT))) {
                                 event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), stack);
                             }
                         }

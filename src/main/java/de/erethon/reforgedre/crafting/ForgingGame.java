@@ -18,14 +18,11 @@ package de.erethon.reforgedre.crafting;
 
 import de.erethon.reforgedre.ReConfig;
 import de.erethon.reforgedre.ReForgeDRE;
-import de.erethon.reforgedre.equipment.CustomWeapon;
 import de.erethon.reforgedre.equipment.ForgedEquipment;
 import de.erethon.reforgedre.equipment.MaterialType;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -58,27 +55,31 @@ public class ForgingGame {
         TEMPLATE[31] = WATER;
     }
 
-    static final Set<ForgingGame> cache = new HashSet<>();
+    static final List<ForgingGame> cache = new ArrayList<>();
 
     private ReForgeDRE plugin;
 
-    public Inventory gui;
-    public BukkitTask task;
+    private Inventory gui;
+    private BukkitTask task;
 
-    public Player player;
-    public CustomWeapon weapon;
-    public MaterialType materialType;
-    public ItemStack accessory;
+    private Player player;
+    private ForgedEquipment result;
+    private MaterialType materialType;
+    private ItemStack accessory;
 
-    public ForgingGame(ReForgeDRE plugin, Player player, CustomWeapon weapon, MaterialType materialType, ItemStack accessory) {
+    public ForgingGame(ReForgeDRE plugin, Player player, ForgedEquipment result, MaterialType materialType, ItemStack accessory) {
         this.plugin = plugin;
         cache.add(this);
         this.player = player;
-        this.weapon = weapon;
+        this.result = result;
         this.materialType = materialType;
         this.accessory = accessory;
         gui = Bukkit.createInventory(null, 54, ReConfig.ANVIL_FORGING);
         gui.setContents(TEMPLATE);
+    }
+
+    public Inventory getGUI() {
+        return gui;
     }
 
     public void start() {
@@ -95,18 +96,18 @@ public class ForgingGame {
 
     public class GameTask extends BukkitRunnable {
 
-        ItemStack item1 = weapon.toItemStack(materialType, 1, player.getName(), ForgedEquipment.getOrigin(player), accessory);
-        ItemStack item2 = weapon.toItemStack(materialType, 2, player.getName(), ForgedEquipment.getOrigin(player), accessory);
-        ItemStack item3 = weapon.toItemStack(materialType, 3, player.getName(), ForgedEquipment.getOrigin(player), accessory);
-        ItemStack item4 = weapon.toItemStack(materialType, 4, player.getName(), ForgedEquipment.getOrigin(player), accessory);
-        ItemStack item5 = weapon.toItemStack(materialType, 5, player.getName(), ForgedEquipment.getOrigin(player), accessory);
+        private ItemStack item1 = result.toItemStack(materialType, 1, player.getName(), ForgedEquipment.getOrigin(player), accessory);
+        private ItemStack item2 = result.toItemStack(materialType, 2, player.getName(), ForgedEquipment.getOrigin(player), accessory);
+        private ItemStack item3 = result.toItemStack(materialType, 3, player.getName(), ForgedEquipment.getOrigin(player), accessory);
+        private ItemStack item4 = result.toItemStack(materialType, 4, player.getName(), ForgedEquipment.getOrigin(player), accessory);
+        private ItemStack item5 = result.toItemStack(materialType, 5, player.getName(), ForgedEquipment.getOrigin(player), accessory);
 
-        int i, i2, i3, i4, i5 = 0;
-        int edgeUpperLeft = 0;
-        int edgeUpperRight = 8;
-        int edgeLowerLeft = 45;
-        int edgeLowerRight = 53;
-        byte line = 0;
+        private int i;
+        private int edgeUpperLeft = 0;
+        private int edgeUpperRight = 8;
+        private int edgeLowerLeft = 45;
+        private int edgeLowerRight = 53;
+        private int line;
 
         @Override
         public void run() {
