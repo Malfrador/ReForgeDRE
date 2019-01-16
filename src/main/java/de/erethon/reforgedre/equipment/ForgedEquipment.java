@@ -37,7 +37,7 @@ public interface ForgedEquipment {
 
     static final String STAR = "\u2605";
 
-    public static String getOrigin(Player player) {
+    static String getOrigin(Player player) {
         if (Bukkit.getPluginManager().getPlugin("FactionsXL") != null) {
             Region region = FactionsXL.getInstance().getBoard().getByLocation(player.getLocation());
             return region != null ? region.getName() : FMessage.MISC_WILDERNESS.getMessage();

@@ -35,25 +35,25 @@ import org.bukkit.enchantments.Enchantment;
  */
 public class DREItem {
 
-    public static CustomEquipment DWARF_PICKAXE = new CustomEquipment(CaliburnAPI.getInstance(), "Zwergenspitzhacke");
-    public static CustomEquipment HOLY_SWORD = new CustomEquipment(CaliburnAPI.getInstance(), "Anderthalbh\u00e4nder");
-    public static final CustomWeapon DAGGER = new CustomWeapon("Dolch", SWORD, 3.0, 0.0, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+    public static CustomEquipment DWARF_PICKAXE = (CustomEquipment) new CustomEquipment(CaliburnAPI.getInstance(), "Zwergenspitzhacke").register();
+    public static CustomEquipment HOLY_SWORD = (CustomEquipment) new CustomEquipment(CaliburnAPI.getInstance(), "Anderthalbh\u00e4nder").register();
+    public static final CustomWeapon DAGGER = (CustomWeapon) new CustomWeapon("Dolch", SWORD, 3.0, 0.0, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(20, BLADE)
             .put(29, BLADE)
             .put(37, CROSSGUARD)
             .put(38, HANDLE)
             .put(39, CROSSGUARD)
             .put(47, HANDLE)
-            .build()));
-    public static final CustomWeapon KATANA = new CustomWeapon("Katana", SWORD, 4.8, -2.15, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+            .build())).register();
+    public static final CustomWeapon KATANA = (CustomWeapon) new CustomWeapon("Katana", SWORD, 4.8, -2.15, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(2, BLADE)
             .put(11, BLADE)
             .put(20, BLADE)
             .put(29, BLADE)
             .put(38, HANDLE)
             .put(47, HANDLE)
-            .build()));
-    public static final CustomWeapon LONGSWORD = new CustomWeapon("Langschwert", SWORD, 7.0, -2.8, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+            .build())).register();
+    public static final CustomWeapon LONGSWORD = (CustomWeapon) new CustomWeapon("Langschwert", SWORD, 7.0, -2.8, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(2, BLADE)
             .put(11, BLADE)
             .put(20, BLADE)
@@ -64,9 +64,9 @@ public class DREItem {
             .put(31, CROSSGUARD)
             .put(38, HANDLE)
             .put(47, HANDLE)
-            .build()));
-    public static final CustomWeapon PIRATE_SABER = new CustomWeapon("Piratens\u00e4bel", SWORD, 4.2, -1.9);
-    public static final CustomWeapon RAPIER = new CustomWeapon("Rapier", SWORD, 4.1, -1.7, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+            .build())).register();
+    public static final CustomWeapon PIRATE_SABER = (CustomWeapon) new CustomWeapon("Piratens\u00e4bel", SWORD, 4.2, -1.9).register();
+    public static final CustomWeapon RAPIER = (CustomWeapon) new CustomWeapon("Rapier", SWORD, 4.1, -1.7, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(2, BLADE)
             .put(11, BLADE)
             .put(20, BLADE)
@@ -76,8 +76,8 @@ public class DREItem {
             .put(37, CROSSGUARD)
             .put(38, HANDLE)
             .put(47, HANDLE)
-            .build()));
-    public static final CustomWeapon KNIGHTLY_SWORD = new CustomWeapon("Ritterschwert", SWORD, 5.5, -2.4, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+            .build())).register();
+    public static final CustomWeapon KNIGHTLY_SWORD = (CustomWeapon) new CustomWeapon("Ritterschwert", SWORD, 5.5, -2.4, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(11, BLADE)
             .put(12, BLADE)
             .put(20, BLADE)
@@ -92,8 +92,8 @@ public class DREItem {
             .put(39, HANDLE)
             .put(47, HANDLE)
             .put(48, HANDLE)
-            .build()));
-    public static final CustomWeapon LUMBERJACK_AXE = new CustomWeapon("Holzf\u00e4lleraxt", AXE, 4.5, -3.25, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+            .build())).register();
+    public static final CustomWeapon LUMBERJACK_AXE = (CustomWeapon) new CustomWeapon("Holzf\u00e4lleraxt", AXE, 4.5, -3.25, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(1, BLADE)
             .put(3, HANDLE)
             .put(10, BLADE)
@@ -104,8 +104,8 @@ public class DREItem {
             .put(30, HANDLE)
             .put(39, HANDLE)
             .put(48, HANDLE)
-            .build()));
-    public static final CustomWeapon BATTLEAXE = new CustomWeapon("Streitaxt", AXE, 8.0, -3.25, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
+            .build())).register();
+    public static final CustomWeapon BATTLEAXE = (CustomWeapon) new CustomWeapon("Streitaxt", AXE, 8.0, -3.25, new AdvancedRecipe(new ImmutableMap.Builder<Integer, Component>()
             .put(1, BLADE)
             .put(3, HANDLE)
             .put(5, BLADE)
@@ -120,7 +120,7 @@ public class DREItem {
             .put(30, HANDLE)
             .put(39, HANDLE)
             .put(48, HANDLE)
-            .build()));
+            .build())).register();
 
     static {
         DWARF_PICKAXE.addLore(ForgedEquipment.STAR);
@@ -131,6 +131,9 @@ public class DREItem {
         HOLY_SWORD.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
         Stream.of(buildLore(4, "unbekannt", "Sohothin")).forEach(l -> HOLY_SWORD.addLore(l));
         HOLY_SWORD.addLore(Accessory.RUBIES.getLore());
+    }
+
+    public static void register() {
     }
 
     public static String[] buildLore(int quality, String smith, String origin) {

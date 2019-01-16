@@ -52,6 +52,11 @@ public class CustomWeapon extends CustomEquipment implements ForgedEquipment {
     }
 
     @Override
+    public String getName() {
+        return super.getId();
+    }
+
+    @Override
     public EquipmentType getBaseType() {
         return base;
     }

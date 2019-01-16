@@ -46,6 +46,7 @@ public class ReForgeDRE extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AnvilListener(this), this);
         getServer().getPluginManager().registerEvents(new RecipeListener(this), this);
         getServer().getPluginManager().registerEvents(new ParticleListener(), this);
+        DREItem.register();
     }
 
     @Override

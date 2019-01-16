@@ -51,6 +51,11 @@ public class CustomArmor extends de.erethon.caliburn.item.CustomEquipment implem
     }
 
     @Override
+    public String getName() {
+        return super.getId();
+    }
+
+    @Override
     public EquipmentType getBaseType() {
         return base;
     }
