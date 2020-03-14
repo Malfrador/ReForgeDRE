@@ -25,8 +25,9 @@ import org.bukkit.Material;
  */
 public enum MaterialType {
 
-    CHAINMAIL,
     GOLD(Material.GOLD_INGOT, Material.GOLD_NUGGET),
+    FABRIC(Material.LEATHER, Material.WHITE_WOOL),
+    CHAINMAIL(Material.IRON_NUGGET),
     IRON(Material.IRON_INGOT, Material.IRON_NUGGET);
 
     private List<Material> materials;

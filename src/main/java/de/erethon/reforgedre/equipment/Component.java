@@ -27,6 +27,9 @@ public enum Component {
 
     HANDLE(Material.STICK, Material.DIAMOND, Material.EMERALD, Material.QUARTZ, Material.NETHER_STAR, Material.ENDER_PEARL),
     CROSSGUARD(Material.GOLD_NUGGET, Material.IRON_NUGGET),
+    METAL(Material.IRON_INGOT, Material.GOLD_INGOT),
+    CHAIN(Material.IRON_NUGGET, Material.GOLD_NUGGET),
+    FABRIC(Material.LEATHER, Material.WHITE_WOOL),
     BLADE(Material.GOLD_INGOT, Material.IRON_INGOT);
 
     private List<Material> materials;

@@ -20,7 +20,6 @@ import de.erethon.reforgedre.accessory.ParticleListener;
 import de.erethon.reforgedre.equipment.Equipment;
 import de.erethon.reforgedre.equipment.MaterialType;
 import de.erethon.reforgedre.equipment.Weapon;
-import de.erethon.sakura.SakuraItem;
 import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Material;
@@ -76,7 +75,7 @@ public class ReForgeDRE extends JavaPlugin {
                     inventory.addItem(new ItemStack(GOLD_INGOT, 64));
                     break;
                 case "daoshen":
-                    inventory.addItem(Weapon.KATANA.toItemStack(MaterialType.IRON, 4, "unbekannt", "Dao-Shen"), SakuraItem.SAPLING);
+                    inventory.addItem(Weapon.KATANA.toItemStack(MaterialType.IRON, 4, "unbekannt", "Dao-Shen"));
                     break;
                 case "pirate":
                     ItemStack parrot = new ItemStack(PARROT_SPAWN_EGG, 1);

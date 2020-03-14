@@ -16,10 +16,8 @@
  */
 package de.erethon.reforgedre;
 
-import de.erethon.reforgedre.equipment.Component;
-import de.erethon.reforgedre.equipment.Equipment;
-import de.erethon.reforgedre.equipment.MaterialType;
-import de.erethon.reforgedre.equipment.Weapon;
+import de.erethon.reforgedre.equipment.*;
+
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Bukkit;
@@ -174,6 +172,7 @@ public class AdvancedWorkbench {
     public Inventory gui;
     public Player player;
     public Weapon weapon;
+    public Armor armor;
     public MaterialType materialType;
     public ItemStack accessory;
 
@@ -202,8 +201,11 @@ public class AdvancedWorkbench {
             applyType(Type.SWORD);
         }
     }
+    public Type getType() {
+        return type;
+    }
 
-    public void checkRecipes() {
+    public void checkWeaponRecipes() {
         MaterialType materialType = null;
         Weapon checked = null;
         for (Weapon weapon : Weapon.values()) {
@@ -250,6 +252,55 @@ public class AdvancedWorkbench {
         this.materialType = materialType;
         if (weapon != null && materialType != null) {
             gui.setItem(RESULT_SLOT, weapon.toItemStack(materialType, -1, player.getName(), Equipment.getOrigin(player), accessory));
+        } else {
+            gui.setItem(RESULT_SLOT, null);
+        }
+    }
+
+    public void checkArmorRecipes() {
+        MaterialType materialType = null;
+        Armor checked = null;
+        for (Armor armor : Armor.values()) {
+            if (armor.getRecipe() == null) {
+                continue;
+            }
+            for (int slot : type.craftSlots) {
+                Component type = armor.getRecipe().getIngredients().get(slot);
+                ItemStack ingredient = gui.getItem(slot);
+                if (ingredient == null && type == null) {
+                    continue;
+                }
+                if (ingredient == null & type != null || type == null & ingredient != null) {
+                    checked = null;
+                    materialType = null;
+                    break;
+                }
+                if (ingredient.getAmount() != 1 || !type.getMaterials().contains(ingredient.getType())) {
+                    checked = null;
+                    materialType = null;
+                    break;
+                }
+                if ((type == Component.CHAIN) || (type == Component.FABRIC) || (type == Component.METAL) ) {
+                    if (materialType == null) {
+                        materialType = MaterialType.getByMaterial(ingredient.getType());
+                    } else if (!materialType.getMaterials().contains(ingredient.getType())) {
+                        checked = null;
+                        materialType = null;
+                        break;
+                    }
+                }
+                if (checked == null) {
+                    checked = armor;
+                }
+            }
+            if (checked != null && materialType != null) {
+                break;
+            }
+        }
+        armor = checked;
+        this.materialType = materialType;
+        if (armor != null && materialType != null) {
+            gui.setItem(RESULT_SLOT, armor.toItemStack(materialType, -1, player.getName(), Equipment.getOrigin(player), accessory));
         } else {
             gui.setItem(RESULT_SLOT, null);
         }

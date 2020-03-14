@@ -78,11 +78,20 @@ public class AnvilListener implements Listener {
                     if (anvil.weapon != null) {
                         new ForgingGame(plugin, (Player) player, anvil.weapon, anvil.materialType, anvil.accessory).start();
                     }
+                    if (anvil.armor != null) {
+                        new ForgingGameArmor(plugin, (Player) player, anvil.armor, anvil.materialType, anvil.accessory).start();
+                    }
                 } else {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            anvil.checkRecipes();
+                            AdvancedWorkbench.Type type = anvil.getType();
+                            if ((type == AdvancedWorkbench.Type.CHESTPLATE) || (type == AdvancedWorkbench.Type.HELMET) || (type == AdvancedWorkbench.Type.LEGGINGS) || (type == AdvancedWorkbench.Type.BOOTS)) {
+                                anvil.checkArmorRecipes();
+                            }
+                            else {
+                                anvil.checkWeaponRecipes();
+                            }
                         }
                     }.runTaskLater(plugin, 1);
                 }
@@ -92,6 +101,16 @@ public class AnvilListener implements Listener {
         for (ForgingGame game : ForgingGame.cache) {
             if (event.getInventory() != null && game.gui.equals(event.getInventory())) {
                 if (ForgingGame.FURNACE.equals(clicked) || ForgingGame.WATER.equals(clicked)) {
+                    event.setCancelled(true);
+                } else if (clicked != null && clicked.getType() != Material.AIR) {
+                    event.setCancelled(true);
+                    game.finish(event.getCurrentItem());
+                }
+            }
+        }
+        for (ForgingGameArmor game : ForgingGameArmor.cache) {
+            if (event.getInventory() != null && game.gui.equals(event.getInventory())) {
+                if (ForgingGameArmor.FURNACE.equals(clicked) || ForgingGameArmor.WATER.equals(clicked)) {
                     event.setCancelled(true);
                 } else if (clicked != null && clicked.getType() != Material.AIR) {
                     event.setCancelled(true);
@@ -112,11 +131,21 @@ public class AnvilListener implements Listener {
                     if (anvil.weapon != null) {
                         new ForgingGame(plugin, (Player) event.getWhoClicked(), anvil.weapon, anvil.materialType, anvil.accessory).start();
                     }
+                    if (anvil.armor != null) {
+                        new ForgingGameArmor(plugin, (Player) event.getWhoClicked(), anvil.armor, anvil.materialType, anvil.accessory).start();
+                    }
                 } else {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            anvil.checkRecipes();
+                            AdvancedWorkbench.Type type = anvil.getType();
+                            if ((type == AdvancedWorkbench.Type.CHESTPLATE) || (type == AdvancedWorkbench.Type.HELMET) || (type == AdvancedWorkbench.Type.LEGGINGS) || (type == AdvancedWorkbench.Type.BOOTS)) {
+                                anvil.checkArmorRecipes();
+                            }
+                            else {
+                                anvil.checkWeaponRecipes();
+                            }
+
                         }
                     }.runTaskLater(plugin, 1);
                 }

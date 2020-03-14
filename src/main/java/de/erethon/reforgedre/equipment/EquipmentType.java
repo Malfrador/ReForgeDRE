@@ -16,6 +16,7 @@
  */
 package de.erethon.reforgedre.equipment;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 /**
@@ -25,13 +26,14 @@ public enum EquipmentType {
 
     AXE(Material.IRON_AXE, Material.GOLDEN_AXE),
     SWORD(Material.IRON_SWORD, Material.GOLDEN_SWORD),
-    HELMET(Material.IRON_HELMET, Material.GOLDEN_HELMET, Material.CHAINMAIL_HELMET),
-    CHESTPLATE(Material.IRON_CHESTPLATE, Material.GOLDEN_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE),
-    LEGGINGS(Material.IRON_LEGGINGS, Material.GOLDEN_LEGGINGS, Material.CHAINMAIL_LEGGINGS),
-    BOOTS(Material.IRON_BOOTS, Material.GOLDEN_BOOTS, Material.CHAINMAIL_BOOTS);
+    HELMET(Material.IRON_HELMET, Material.GOLDEN_HELMET, Material.CHAINMAIL_HELMET, Material.LEATHER_HELMET),
+    CHESTPLATE(Material.IRON_CHESTPLATE, Material.GOLDEN_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE, Material.LEATHER_CHESTPLATE),
+    LEGGINGS(Material.IRON_LEGGINGS, Material.GOLDEN_LEGGINGS, Material.CHAINMAIL_LEGGINGS, Material.LEATHER_LEGGINGS),
+    BOOTS(Material.IRON_BOOTS, Material.GOLDEN_BOOTS, Material.CHAINMAIL_BOOTS, Material.LEATHER_BOOTS);
 
     private Material iron;
     private Material gold;
+    private Material leather;
     private Material chainmail;
 
     private EquipmentType(Material iron, Material gold) {
@@ -44,9 +46,16 @@ public enum EquipmentType {
         this.chainmail = chainmail;
     }
 
+    private EquipmentType(Material iron, Material gold, Material chainmail, Material leather) {
+        this(iron, gold, chainmail);
+        this.leather = leather;
+    }
+
     public Material getMaterial(MaterialType type) {
         if (type == MaterialType.CHAINMAIL) {
             return chainmail;
+        } else if (type == MaterialType.FABRIC) {
+            return leather;
         } else if (type == MaterialType.GOLD) {
             return gold;
         } else if (type == MaterialType.IRON) {
@@ -68,8 +77,6 @@ public enum EquipmentType {
         return chainmail;
     }
 
-    public boolean isArmor() {
-        return chainmail != null;
-    }
+    public Material getLetherMaterial() { return leather;}
 
 }

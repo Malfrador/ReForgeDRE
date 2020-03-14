@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>reforgedre</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>ReForgeDRE</name>
     <build>
@@ -30,12 +30,6 @@
         </plugins>
     </build>
     <dependencies>
-        <dependency>
-            <groupId>de.erethon</groupId>
-            <artifactId>sakura</artifactId>
-            <version>1.8</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
             <artifactId>factionsxl</artifactId>

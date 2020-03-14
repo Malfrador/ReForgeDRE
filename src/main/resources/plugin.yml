@@ -1,7 +1,7 @@
 name: ReForgeDRE
 main: de.erethon.reforgedre.ReForgeDRE
 version: ${project.version}
-author: Daniel Saukel
+author: Daniel Saukel, Malfrador
 api-version: 1.13
 commands:
   reforge:
