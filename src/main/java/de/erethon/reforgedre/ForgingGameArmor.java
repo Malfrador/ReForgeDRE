@@ -46,8 +46,8 @@ public class ForgingGameArmor {
         ItemMeta meta = WATER.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Falten... Schmelzen... Abschrecken!");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Versuche, die beste Waffe");
-        lore.add(ChatColor.GRAY + "zu erwischen, bevor sie bricht!");
+        lore.add(ChatColor.GRAY + "Versuche, die beste Rüstung");
+        lore.add(ChatColor.GRAY + "zu erwischen, bevor sie zerbricht!");
         meta.setLore(lore);
         WATER.setItemMeta(meta);
         FURNACE.setItemMeta(meta);
