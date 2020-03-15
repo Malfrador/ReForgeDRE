@@ -16,6 +16,8 @@
  */
 package de.erethon.reforgedre;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -30,6 +32,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.omg.PortableServer.AdapterActivator;
 
 /**
  * @author Daniel Saukel
@@ -66,12 +69,15 @@ public class AnvilListener implements Listener {
                     ((Player) player).playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
                     for (ItemStack stack : event.getInventory().getContents()) {
                         if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
-                                && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                                && !AdvancedWorkbench.SWITCH.equals(stack) && !AdvancedWorkbench.MENU.getItemMeta().getDisplayName().contains("Vorlage") &&!stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
                             player.getWorld().dropItem(player.getLocation(), stack);
                         }
                     }
                     anvil.nextType();
-                } else if (AdvancedWorkbench.PLACEHOLDER.equals(clicked)) {
+                } else if (AdvancedWorkbench.PLACEHOLDER.equals(clicked) || AdvancedWorkbench.MENU.equals(clicked)) {
+                    if (AdvancedWorkbench.MENU.equals(clicked)) {
+                        player.sendMessage(ChatColor.GRAY + "Rezepte findest du im Wiki" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "https://erethon.de/wiki/index.php/Schmieden");
+                    }
                     event.setCancelled(true);
                 } else if (event.getSlot() == AdvancedWorkbench.RESULT_SLOT) {
                     event.setCancelled(true);
@@ -124,7 +130,7 @@ public class AnvilListener implements Listener {
     public void onInventoryDrag(InventoryDragEvent event) {
         for (final AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
             if (event.getInventory() != null && anvil.gui.equals(event.getInventory())) {
-                if (AdvancedWorkbench.PLACEHOLDER.equals(event.getCursor())) {
+                if (AdvancedWorkbench.PLACEHOLDER.equals(event.getCursor())  || AdvancedWorkbench.MENU.getItemMeta().getDisplayName().contains("Vorlage")) {
                     event.setCancelled(true);
                 } else if (event.getRawSlots().contains(AdvancedWorkbench.RESULT_SLOT)) {
                     event.setCancelled(true);
@@ -165,9 +171,10 @@ public class AnvilListener implements Listener {
                 for (AdvancedWorkbench anvil : AdvancedWorkbench.cache) {
                     if (anvil.gui.equals(event.getInventory())) {
                         for (ItemStack stack : event.getInventory().getContents()) {
-                            if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack)
-                                    && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
-                                event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), stack);
+                            if (stack != null && !AdvancedWorkbench.PLACEHOLDER.equals(stack) && !AdvancedWorkbench.SWITCH.equals(stack) && !stack.equals(anvil.gui.getItem(AdvancedWorkbench.RESULT_SLOT))) {
+                                if (!stack.getItemMeta().getDisplayName().contains("Vorlage")) {
+                                    event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), stack);
+                                }
                             }
                         }
                         AdvancedWorkbench.cache.remove(anvil);
