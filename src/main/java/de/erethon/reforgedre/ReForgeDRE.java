@@ -80,10 +80,17 @@ public class ReForgeDRE extends JavaPlugin {
                     ItemStack parrot = new ItemStack(PARROT_SPAWN_EGG, 1);
                     inventory.addItem(Weapon.PIRATE_SABER.toItemStack(MaterialType.IRON, 3, "Arrrr!", "7 Weltmeere"), parrot);
                     break;
+                default:
+                    sender.sendMessage("Optionen: cuthalorn, arachnida, sohothin, hohenstein, golvathal, daoshen, pirate");
+                    return false;
             }
             inventory.addItem(new ItemStack(LEATHER_CHESTPLATE), new ItemStack(LEATHER_LEGGINGS),
                     new ItemStack(LEATHER_BOOTS), new ItemStack(BREAD, 32));
         }
+        else {
+            sender.sendMessage("/rfgive start <Kit>");
+            return false;
+            }
         if (!sender.isOp()) {
             return false;
         }
