@@ -38,8 +38,10 @@ public class AdvancedWorkbench {
 
     public static final ItemStack PLACEHOLDER = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
     public static final ItemStack SWITCH = new ItemStack(Material.CRAFTING_TABLE);
+    public static ItemStack MENU = new ItemStack(Material.BLAZE_ROD);
     public static final int SWITCH_SLOT = 8;
     public static final int RESULT_SLOT = 35;
+    public static final int MENU_SLOT = 53;
     public static final ItemStack[] SWORD_TEMPLATE = new ItemStack[54];
     public static final ItemStack[] AXE_TEMPLATE = new ItemStack[54];
     public static final ItemStack[] HELMET_TEMPLATE = new ItemStack[54];
@@ -56,9 +58,8 @@ public class AdvancedWorkbench {
         PLACEHOLDER.setItemMeta(plMeta);
 
         int i = -1;
-        i = -1;
         slots:
-        while (i != 53) {
+        while (i != 52) {
             i++;
             for (int slot : Type.SWORD.craftSlots) {
                 if (slot == i) {
@@ -73,7 +74,7 @@ public class AdvancedWorkbench {
 
         i = -1;
         slots:
-        while (i != 53) {
+        while (i != 52) {
             i++;
             for (int slot : Type.AXE.craftSlots) {
                 if (slot == i) {
@@ -88,7 +89,7 @@ public class AdvancedWorkbench {
 
         i = -1;
         slots:
-        while (i != 53) {
+        while (i != 52) {
             i++;
             for (int slot : Type.HELMET.craftSlots) {
                 if (slot == i) {
@@ -103,7 +104,7 @@ public class AdvancedWorkbench {
 
         i = -1;
         slots:
-        while (i != 53) {
+        while (i != 52) {
             i++;
             for (int slot : Type.CHESTPLATE.craftSlots) {
                 if (slot == i) {
@@ -118,7 +119,7 @@ public class AdvancedWorkbench {
 
         i = -1;
         slots:
-        while (i != 53) {
+        while (i != 52) {
             i++;
             for (int slot : Type.LEGGINGS.craftSlots) {
                 if (slot == i) {
@@ -187,6 +188,40 @@ public class AdvancedWorkbench {
         this.type = type;
         gui.clear();
         gui.setContents(type.template);
+        ItemMeta iMeta = MENU.getItemMeta();
+        gui.clear(MENU_SLOT);
+        switch (type) {
+            case SWORD:
+                iMeta.setDisplayName(ChatColor.GRAY + "Vorlage" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "Schwert");
+                MENU.setItemMeta(iMeta);
+                gui.setItem(MENU_SLOT, MENU);
+                break;
+            case AXE:
+                iMeta.setDisplayName(ChatColor.GRAY + "Vorlage" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "Axt");
+                MENU.setItemMeta(iMeta);
+                gui.setItem(MENU_SLOT, MENU);
+                break;
+            case HELMET:
+                iMeta.setDisplayName(ChatColor.GRAY + "Vorlage" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "Helm");
+                MENU.setItemMeta(iMeta);
+                gui.setItem(MENU_SLOT, MENU);
+                break;
+            case CHESTPLATE:
+                iMeta.setDisplayName(ChatColor.GRAY + "Vorlage" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "Brustplatte");
+                MENU.setItemMeta(iMeta);
+                gui.setItem(MENU_SLOT, MENU);
+                break;
+            case LEGGINGS:
+                iMeta.setDisplayName(ChatColor.GRAY + "Vorlage" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "Beine");
+                MENU.setItemMeta(iMeta);
+                gui.setItem(MENU_SLOT, MENU);
+                break;
+            case BOOTS:
+                iMeta.setDisplayName(ChatColor.GRAY + "Vorlage" + ChatColor.DARK_GRAY + ": " + ChatColor.GOLD + "Schuhe");
+                MENU.setItemMeta(iMeta);
+                gui.setItem(MENU_SLOT, MENU);
+                break;
+        }
     }
 
     public void nextType() {
