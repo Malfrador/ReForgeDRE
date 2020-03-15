@@ -45,7 +45,6 @@ public class ReForgeDRE extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AnvilListener(this), this);
         getServer().getPluginManager().registerEvents(new RecipeListener(this), this);
         getServer().getPluginManager().registerEvents(new ParticleListener(), this);
-        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new InvisibilityListener(), this);
     }
 
@@ -55,7 +54,7 @@ public class ReForgeDRE extends JavaPlugin {
             return false;
         }
         Player player = (Player) sender;
-        if (args[0].equalsIgnoreCase("start") && args.length == 2 && JoinListener.cache.contains(player.getUniqueId()) | sender.isOp()) {
+        if (args[0].equalsIgnoreCase("start") && args.length == 2 | sender.isOp()) {
             PlayerInventory inventory = player.getInventory();
             switch (args[1]) {
                 case "cuthalorn":
@@ -84,7 +83,6 @@ public class ReForgeDRE extends JavaPlugin {
             }
             inventory.addItem(new ItemStack(LEATHER_CHESTPLATE), new ItemStack(LEATHER_LEGGINGS),
                     new ItemStack(LEATHER_BOOTS), new ItemStack(BREAD, 32));
-            JoinListener.cache.remove(player.getUniqueId());
         }
         if (!sender.isOp()) {
             return false;
